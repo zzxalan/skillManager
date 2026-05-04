@@ -1,0 +1,34 @@
+{
+  "name": "team-skills",
+  "version": "0.1.0",
+  "description": "Team-owned reusable Agent Skills for shared AI workflows.",
+  "author": {
+    "name": "Team",
+    "email": "[TODO: team email]",
+    "url": "[TODO: team homepage]"
+  },
+  "homepage": "[TODO: docs url]",
+  "repository": "[TODO: repository url]",
+  "license": "UNLICENSED",
+  "keywords": [
+    "agent-skills",
+    "team-workflows",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Team Skills",
+    "shortDescription": "Reusable team workflows for AI agents.",
+    "longDescription": "A team-maintained bundle of Agent Skills for repeatable workflows, domain knowledge, scripts, and templates.",
+    "developerName": "Team",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use Team Skills for this workflow."
+    ],
+    "brandColor": "#10A37F"
+  }
+}

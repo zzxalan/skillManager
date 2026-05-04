@@ -1,0 +1,20 @@
+{
+  "name": "skill-manager",
+  "interface": {
+    "displayName": "Skill Manager"
+  },
+  "plugins": [
+    {
+      "name": "team-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/team-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
