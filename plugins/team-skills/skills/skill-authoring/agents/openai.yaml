@@ -1,7 +1,0 @@
-interface:
-  display_name: "Skill Authoring"
-  short_description: "Create and review reusable team skills."
-  default_prompt: "Use $skill-authoring to create or improve a team Agent Skill."
-
-policy:
-  allow_implicit_invocation: true
