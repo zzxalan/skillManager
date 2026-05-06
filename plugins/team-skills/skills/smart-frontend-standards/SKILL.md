@@ -1,6 +1,6 @@
 ---
 name: smart-frontend-standards
-description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端 开发规范。Use when Codex works on React TypeScript Vite qiankun Ant Design Pro Components UnoCSS VAObkTable useBreadcrumb H5 页面 插件前端构建 接口请求 或前端页面审查。"
+description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端 开发规范。Use when Codex works on React TypeScript Vite qiankun Ant Design Pro Components UnoCSS CSS Modules theme.useToken VaTable VAObkTable useBreadcrumb H5 页面 插件前端构建 接口请求 或前端页面审查。"
 ---
 
 # Smart Frontend Standards
@@ -21,9 +21,9 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端
 ## Reference Routing
 
 - 页面、布局、目录组织、共享组件、路由接入、请求 effect：读取 `references/frontend-page-structure.md`
-- 列表页、CRUD 页、表格、查询、表单弹窗、`VAObkTable`：读取 `references/frontend-table-list.md`
+- 列表页、CRUD 页、表格、查询、表单弹窗、`VAObkTable`、底层 `VaTable`：读取 `references/frontend-table-list.md`
 - 面包屑、返回路径、页面导航：读取 `references/frontend-navigation.md`
-- 视觉结构、交互布局、超长文本、页面错误提示策略：读取 `references/frontend-design-guidelines.md`
+- 视觉结构、交互布局、超长文本、CSS Modules、antd token、页面错误提示策略：读取 `references/frontend-design-guidelines.md`
 - H5 移动端页面、独立入口、H5 Vite 配置：读取 `references/frontend-h5-development.md`
 - qiankun、Vite、微前端接入、前端 API 前缀与请求封装：读取 `references/frontend-microfrontend.md`
 - 任意代码修改、命名、格式、中文注释与可读性：读取 `references/coding-style.md`
@@ -37,6 +37,7 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端
 - 优先复用已有页面壳、统一组件、统一 hooks、统一请求封装和邻近页面模式。
 - 页面请求只由真正影响参数的响应式值触发，避免 `useEffectEvent` 被误放进依赖数组造成循环请求。
 - 受宿主环境、内网依赖或联调条件限制时，明确区分已验证部分与未验证部分。
+- 开发或审查中发现可复用的新前端规范时，优先按 `team-skill-iteration` 记录；用户明确要求立即沉淀时，再补到最贴近的 frontend reference，不堆到 `SKILL.md`。
 
 ## Conflict Order
 

@@ -8,6 +8,8 @@
 
 - 管理页与业务页先沿用现有 Ant Design、Pro Components 与 UnoCSS 组合方式。
 - 同类页面优先复用相同的页面壳、按钮区、工具栏、筛选区和内容容器结构。
+- 页面级样式与可复用组件样式优先使用 CSS Modules，避免把页面局部样式扩散成全局选择器；单个原子布局或间距仍按项目现有 UnoCSS 写法处理。
+- 新增 `color`、`padding`、`fontSize`、`fontWeight`、`margin`、`backgroundColor`、边框、阴影等视觉值时，优先通过 `theme.useToken().token` 取得 antd 设计令牌；只有项目已有样式、业务品牌色或第三方协议要求时，才保留明确的硬编码值。
 - 前端文本展示默认视为“不定长数据”，标题、名称、标签值、描述、表格单元格、卡片字段等承载业务数据的区域，都必须预先考虑超长文本场景，避免把布局撑破、遮挡操作区或造成移动端溢出。
 - 若文本区域有明确的单行或多行视觉边界，默认补齐截断策略，例如 `min-width: 0`、`overflow: hidden`、`text-overflow: ellipsis`、`white-space: nowrap` 或多行截断；不要等页面被长数据顶坏后再补救。
 - 被截断的关键业务文本需要提供可恢复的完整信息查看方式，优先使用悬浮提示、展开态、详情区或复制能力；不要只截断不提供查看完整内容的入口。
@@ -19,6 +21,8 @@
 ## 推荐模式
 
 - 先找一个最接近的现有页面作为视觉与交互参考。
+- 新增页面样式时，先判断是否已有同名 `.module.less` / `.module.scss` / `.module.css` 约定；若邻近页面已使用 CSS Modules，默认跟随其命名和组合方式。
+- 使用 antd token 时只取语义相近的令牌，例如文字色用 `colorText*`，边框用 `colorBorder*`，间距用 `padding*` / `margin*`，字号用 `fontSize*`，圆角用 `borderRadius*`。
 - 页面开发时，把“最长文案会是什么”作为默认检查项，至少覆盖房间名、门锁名、楼栋名、校区名、状态说明、操作结果、表格列值等来自后端或用户输入的数据字段。
 - 对详情页、信息卡、表格列、按钮旁标题等容易被长文本挤压的区域，优先封装统一的文本展示模式，例如“省略 + Tooltip”或“省略 + 展开”，避免每个页面临时各写一套。
 - 页面存在加载、保存、校验等多处请求失败处理时，在页面内集中定义静默请求选项和错误文案解析函数，统一处理后端业务 `msg`、通用回退文案与重复弹窗控制，不要在多个调用点各自拼接一套错误逻辑。
@@ -28,6 +32,8 @@
 ## 禁止做法
 
 - 为了一个页面突然替换整个设计语言。
+- 为单个页面新增全局 class、覆盖 antd 全局选择器或污染宿主页面样式，除非已经确认没有 CSS Modules 或局部作用域方案可用。
+- 在新增代码里随手写 `#1677ff`、`16px`、`600`、`rgba(...)` 等具体视觉值，且没有说明为什么不能使用当前主题 token。
 - 默认假设后端返回的标题、名称或描述都很短，因此不做任何宽度收敛、截断或换行策略。
 - 只在本次发现问题的字段上临时补样式，而不把“文本长度约束”当成页面开发的通用检查项。
 - 文本被省略后既没有 Tooltip、展开区，也没有其他查看完整值的方式，导致真实数据不可读。
@@ -38,6 +44,8 @@
 ## 开发或评审检查点
 
 - 是否先复用了现有页面视觉结构。
+- 页面级样式是否使用 CSS Modules 或现有局部样式方案，没有引入不必要的全局污染。
+- 新增视觉值是否优先来自 `theme.useToken().token`，硬编码值是否确有现有样式、品牌或协议依据。
 - 页面中的关键业务文本是否都评估了超长场景，且不会撑破布局、遮挡按钮或在移动端溢出。
 - 需要截断的文本是否同时提供了查看完整内容的交互。
 - 页面接口失败时，是否优先展示后端业务 `msg`，而不是被 `服务器请求失败` 这类框架兜底文案覆盖。
@@ -50,5 +58,6 @@
 - `frontend/src/pages`
 - `frontend/src/layouts/BasicLayout.tsx`
 - `frontend/src/pages/door-settings/index.tsx`
+- `frontend/src/**/*.module.*`
 - `/home/zzx/code/outbook/smart-activity-mixed/frontend/src/pages/plan/components/template-detail-form-panel.tsx`
 - `/home/zzx/code/outbook/smart-pubInfo-mixed/frontend/src/utils/taskConflict.tsx`

@@ -1,6 +1,6 @@
 ---
 name: smart-backend-standards
-description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端 开发规范。Use when Codex works on Java Spring Controller Service Mapper MyBatis-Flex CommonResult TimeManager EventBus Quartz NodeService Extract 插件打包 接口联调 或后端代码审查。"
+description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端 开发规范。Use when Codex works on Java Spring Controller Service Mapper MyBatis-Flex CommonResult TimeManager EventBus Quartz NodeService Extract ExtractFactory MessageOpenApi MessageTemplateExtract 插件打包 接口联调 或后端代码审查。"
 ---
 
 # Smart Backend Standards
@@ -22,6 +22,8 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端
 
 - 后端接口、Controller、HTTP 方法、分页返回、响应包装：读取 `references/backend-api-response.md`
 - 数据访问、实体、Mapper、Service、查询、分页、状态回写：读取 `references/backend-data-access.md`
+- Extract 扩展点、`@Extract`、bus/scene、`ExtractFactory`、扩展接口设计：读取 `references/backend-extract-extension.md`
+- 宿主消息能力、`MessageOpenApi`、消息模板、消息跳转、消息投递审计：读取 `references/backend-message-feature.md`
 - 包结构、Controller / Service / DTO 落点、测试与验证范围：读取 `references/backend-module-structure.md`
 - 节点树、`NodeService`、`@Extract`、通用节点接口：读取 `references/backend-node-service.md`
 - 定时任务、Quartz、Job、Trigger、调度清理：读取 `references/backend-scheduler.md`
@@ -36,6 +38,7 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端
 - 优先复用宿主能力、统一封装、统一响应、统一数据访问模式和邻近模块实现。
 - 不因存量代码缺注释而跳过本次改动应补的中文职责说明。
 - 受宿主环境、内网依赖或联调条件限制时，明确区分已验证部分与未验证部分。
+- 开发或审查中发现可复用的新后端规范时，优先按 `team-skill-iteration` 记录；用户明确要求立即沉淀时，再补到最贴近的 backend reference，不堆到 `SKILL.md`。
 
 ## Conflict Order
 

@@ -12,6 +12,7 @@
 
 ## 强制规则
 
+- 节点树是 `Extract` 的专项场景；通用扩展点设计、`bus/scene` 命名和宿主获取方式先遵守 `backend-extract-extension.md`，本文件只补充 `NodeService` 相关约束。
 - 节点树能力优先走宿主 `NodeService` 总线，不要先在 Controller 或普通业务 Service 中手拼一套独立树结构。
 - 插件提供节点服务时，必须通过 `@Extract(bus = "NodeService", scene = "...")` 注册 scene；不要只约定字符串或只在文档里声明。
 - 若插件代码要调用宿主里的 `NodeFactory`、`DataPermissionService`、`RoomService` 等主程序 Bean，必须按宿主注入方式接入，不要在插件里重复造一套实现。

@@ -11,11 +11,14 @@
 - 获取当前时间、日期、时间戳或时区时，是否统一使用 `TimeManager`。
 - 后端接口是否统一使用 `CommonResult`。
 - 数据访问是否优先使用 MyBatis-Flex，且没有硬编码 SQL。
+- 涉及分表数据时，是否按业务日期/租户等真实分片维度访问目标表，并覆盖旧分表字段、目标表不存在和历史数据读写。
 - 若使用 MyBatis-Flex `saveOrUpdate` / `saveOrUpdateBatch`，是否核对过主键生成策略，避免在业务主键或手动主键场景下把新增误写成更新。
 - 若使用 MyBatis-Flex ActiveRecord 实体 `update()`，是否确认不会因默认 `queryWrapper` 缺少 `where` 而整表更新；状态回写、反馈回写、快照回写应优先使用显式 `where id` 的局部字段更新。
 - 若出现定时任务，是否已经先论证无法用计算式方案替代，并说明性能与时间误差为什么可接受。
 - 定时任务是否统一接入基座 Quartz，且没有再创建并行的 Scheduler、`@Scheduled` 体系或独立生命周期清理逻辑。
 - 若引入事件驱动、异步通知或延迟执行，是否优先复用了基座 `EventBusManager` 与 `@Service` + `@Subscribe`，而不是在插件里另起一套 EventBus/监听器注册机制。
+- 若引入 Extract 扩展点，是否明确了稳定接口、`@Extract` 的 `bus/scene`、获取方式和异常隔离策略。
+- 插件消息投递是否复用宿主 `MessageOpenApi`、`MessageTemplateExtract` 和统一消息中心，而不是自建消息表或绕过 MAIN Bean 注入规则。
 - 是否沿用了邻近模块的稳定编码风格，没有做与任务无关的大面积格式重排。
 - 代码注释是否统一使用中文，并按业务复杂度控制注释密度，重点解释业务约束而不是复述代码动作。
 - 新增或修改的业务类、接口、配置类、Extract、Job、实体、DTO/VO 等文件，是否补了中文类注释或职责说明。

@@ -10,8 +10,9 @@
 - 是否保持了现有 React、Vite、qiankun、Ant Design、Pro Components、UnoCSS 和项目请求封装。
 - 页面落点是否合理，是否沿用了现有目录、布局、hooks、services 与组件模式。
 - 前端插件 API 路径是否包含正确的 `/api/<插件ID>/...` 前缀，且与后端打包配置中的插件 ID 一致。
-- 前端列表或 CRUD 页面是否优先使用 `VAObkTable`。
+- 前端列表或 CRUD 页面是否优先使用 `VAObkTable` / `VaTable`，并遵守操作列、详情加载、批量删除和搜索参数合并约束。
 - 页面导航与面包屑是否优先使用 `useBreadcrumb`。
+- 页面样式是否使用 CSS Modules 或现有局部样式方案，新增视觉值是否优先来自 `theme.useToken().token`。
 - 标题、名称、描述、表格列值、卡片字段等文本区域是否考虑超长数据场景，并在必要时提供截断后的完整内容查看方式。
 - 页面自行处理请求错误时，是否优先读取后端业务 `msg`，并避免请求层与页面层重复弹出错误提示。
 - 页面级请求是否只由必要依赖触发，尤其是 `useEffectEvent` 返回函数没有被错误加入 `useEffect` 依赖数组。
