@@ -1,0 +1,7 @@
+interface:
+  display_name: "Smart Backend Standards"
+  short_description: "用于 smart 项目后端开发、插件联调与后端审查规范。"
+  default_prompt: "Use $smart-backend-standards to 处理这个 smart-* 插件后端任务，并按后端规范选择 references。"
+
+policy:
+  allow_implicit_invocation: true
