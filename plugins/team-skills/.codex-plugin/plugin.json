@@ -1,33 +1,36 @@
 {
   "name": "team-skills",
-  "version": "0.1.0",
-  "description": "Team-owned reusable Agent Skills for shared AI workflows.",
+  "version": "0.1.1",
+  "description": "团队维护的可复用 Agent Skills，用于沉淀共享 AI 工作流。",
   "author": {
-    "name": "Team",
-    "email": "[TODO: team email]",
-    "url": "[TODO: team homepage]"
+    "name": "outbook",
+    "email": "无",
+    "url": "[待填写: 团队主页]"
   },
-  "homepage": "[TODO: docs url]",
-  "repository": "[TODO: repository url]",
+  "homepage": "https://github.com/zzxalan/skillManager",
+  "repository": "https://github.com/zzxalan/skillManager",
   "license": "UNLICENSED",
   "keywords": [
-    "agent-skills",
-    "team-workflows",
-    "codex"
+    "团队技能",
+    "团队工作流",
+    "AI Agent",
+    "Codex"
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Team Skills",
-    "shortDescription": "Reusable team workflows for AI agents.",
-    "longDescription": "A team-maintained bundle of Agent Skills for repeatable workflows, domain knowledge, scripts, and templates.",
-    "developerName": "Team",
-    "category": "Productivity",
+    "displayName": "团队技能",
+    "shortDescription": "面向 AI Agent 的可复用团队工作流。",
+    "longDescription": "由团队维护的 Agent Skills 集合，用于沉淀可复用流程、领域知识、脚本和模板。",
+    "developerName": "团队",
+    "category": "生产力",
     "capabilities": [
       "Read",
       "Write"
     ],
     "defaultPrompt": [
-      "Use Team Skills for this workflow."
+      "梳理 smart 插件需求边界，生成实施计划。",
+      "按 smart 前后端规范实现变更并完成验证。",
+      "优化提示词或复盘团队 skill 使用问题。"
     ],
     "brandColor": "#10A37F"
   }
