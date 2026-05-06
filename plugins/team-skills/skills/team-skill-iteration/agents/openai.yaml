@@ -1,0 +1,7 @@
+interface:
+  display_name: "Team Skill Iteration"
+  short_description: "记录团队 skill 使用问题、评审结论与后续优化建议。"
+  default_prompt: "Use $team-skill-iteration to 记录这次团队 skill 使用问题，并给出后续迭代建议。"
+
+policy:
+  allow_implicit_invocation: true

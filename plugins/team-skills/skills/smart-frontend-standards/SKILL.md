@@ -1,6 +1,6 @@
 ---
 name: smart-frontend-standards
-description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端 开发规范。Use when Codex works on React TypeScript Vite qiankun Ant Design Pro Components UnoCSS VAObkTable useBreadcrumb H5 页面 插件前端构建 接口请求 页面审查 或前端规范沉淀。"
+description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端 开发规范。Use when Codex works on React TypeScript Vite qiankun Ant Design Pro Components UnoCSS VAObkTable useBreadcrumb H5 页面 插件前端构建 接口请求 或前端页面审查。"
 ---
 
 # Smart Frontend Standards
@@ -17,7 +17,6 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端
 4. 只要涉及代码修改，额外读取 `references/coding-style.md`。
 5. 涉及插件入口、构建产物、资源接入、远程更新或接口联调时，读取 `references/integration-build-packaging.md`。
 6. 完成实现或 review 前，读取 `references/review-checklist.md` 做自检。
-7. 若发现可复用的新前端规范，读取 `references/skill-maintenance.md` 并把规则沉淀到最合适的 reference。
 
 ## Reference Routing
 
@@ -30,7 +29,6 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端
 - 任意代码修改、命名、格式、中文注释与可读性：读取 `references/coding-style.md`
 - 插件入口、构建打包、远程更新、接口联调鉴权：读取 `references/integration-build-packaging.md`
 - 前端代码审查与交付检查：读取 `references/review-checklist.md`
-- skill 自身更新、前端规则沉淀与拆分：读取 `references/skill-maintenance.md`
 
 ## Working Rules
 
