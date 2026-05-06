@@ -1,0 +1,95 @@
+
+pipeline {
+    agent any // 指定 Jenkins 在任何可用的代理上执行此流水线
+
+    tools {
+        nodejs 'latest_lts_NodeJS'
+    }
+
+    // 定义触发器
+    triggers {
+        // 允许 Gitea 通过 Generic Webhook Trigger 插件触发
+        GenericTrigger(
+            genericVariables: [
+                [key: 'ref', value: '$.ref'],
+                [key: 'repoFullName', value: '$.repository.full_name']
+            ],
+            causeString: 'Gitea push: $repoFullName $ref',
+            token: 'smart-__PLUGIN_ID__-mixed',
+            printContributedVariables: true,
+            printPostContent: true,
+            regexpFilterText: '$ref $BRANCH_NAME',
+            regexpFilterExpression: '^refs/heads/(master|develop) \\1$'
+        )
+    }
+
+    stages {
+        // 阶段 1: 检出代码
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        // 阶段 2: 设置权限
+        stage('Set Execute Permission') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'chmod +x backend/gradlew'
+                    }
+                }
+            }
+        }
+
+        // 阶段 3: 构建前端资源
+        stage('Build Frontend Resources') {
+            steps {
+                dir('frontend') {
+                    sh '''
+                        node -v
+                        corepack enable
+                        corepack prepare pnpm@10.15.0 --activate
+                        pnpm -v
+                        pnpm install --frozen-lockfile
+                        pnpm build
+                    '''
+                }
+            }
+        }
+
+        // 阶段 4: 构建项目并发布到 Nexus
+        stage('Build and Publish') {
+            steps {
+                dir('backend') {
+                    script {
+                        // 默认值
+                        def branch = 'develop'
+                        def branchName = env.ref ? env.ref.replaceFirst('^refs/heads/', '') : env.BRANCH_NAME
+
+                        // 根据分支动态调整发布分支
+                        if (branchName == 'master') {
+                            branch = 'release'
+                        } else if (branchName == 'develop') {
+                            branch = 'develop'
+                        }
+
+                        echo "Webhook Ref: ${env.ref}"
+                        echo "Current Branch: ${branchName}"
+
+                        // 执行构建并发布到 Nexus
+                        sh "./gradlew clean 发布 --refresh-dependencies -Pbranch=${branch}"
+                    }
+                }
+            }
+        }
+
+        // 阶段 5: 归档本地产物
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'backend/build/out/*.jar', fingerprint: true
+            }
+        }
+    }
+
+}
