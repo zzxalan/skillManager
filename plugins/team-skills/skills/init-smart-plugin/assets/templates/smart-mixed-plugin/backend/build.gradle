@@ -7,24 +7,21 @@ plugins {
     alias(libs.plugins.outbook.plugin.packager)
 }
 
+ext {
+    branch = project.findProperty('branch') ?: 'develop'
+}
+
 group = 'com.outbook.smart'
 version = '0.1.0'
 
-def smartMavenUrl = providers.environmentVariable('SMART_MAVEN_URL')
-def smartMavenUser = providers.environmentVariable('SMART_MAVEN_USERNAME')
-def smartMavenPassword = providers.environmentVariable('SMART_MAVEN_PASSWORD')
-
 repositories {
     mavenLocal()
-    if (smartMavenUrl.isPresent()) {
-        maven {
-            url = uri(smartMavenUrl.get())
-            allowInsecureProtocol = (System.getenv('SMART_MAVEN_ALLOW_INSECURE') ?: 'false').toBoolean()
-            credentials {
-                username = smartMavenUser.orElse('').get()
-                password = smartMavenPassword.orElse('').get()
-            }
-        }
+    maven {
+        url 'http://192.168.50.122:8081/repository/maven-releases/'
+        allowInsecureProtocol = true
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/public/'
     }
     mavenCentral()
 }
@@ -41,13 +38,14 @@ dependencies {
 outbookPackager {
     id "__PLUGIN_ID__"
     name "__DISPLAY_NAME__"
-    fileName "${outbookPackager.id}-${version}"
+    fileName "${outbookPackager.id}-${branch}-${version}"
     pluginInfo {
         bootstrapClass 'com.outbook.smart.__JAVA_PACKAGE_FRAGMENT__.PluginApplication'
         dependencyPlugins = [
                 [id: 'basic', version: '0.0.0'] as DefaultDependencyPlugin
         ]
     }
+    remoteUrl "http://192.168.20.13:18080"
 }
 
 test {
@@ -70,4 +68,24 @@ processResources {
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
     archiveClassifier.set('sources')
+}
+
+task 发布 {
+    dependsOn '正式环境打包'
+    group = 'outbook'
+    description = '发布插件JAR到Nexus仓库'
+
+    doLast {
+        def jarFile = file("${buildDir}/out/${outbookPackager.fileName}.jar")
+        if (!jarFile.exists()) {
+            throw new GradleException("JAR文件不存在: ${jarFile}")
+        }
+
+        def uploadUrl = "http://192.168.50.122:8081/repository/smart-package/${outbookPackager.id}/${branch}/${outbookPackager.fileName}.jar"
+
+        exec {
+            commandLine 'curl', '-u', 'admin:admin', '--upload-file', jarFile.absolutePath, uploadUrl
+        }
+        println "已上传到: ${uploadUrl}"
+    }
 }

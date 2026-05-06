@@ -25,6 +25,7 @@
 ```bash
 ./gradlew test
 ./gradlew build
+./gradlew 发布 -Pbranch=develop
 ```
 
 前端命令默认在 `frontend/` 目录执行：

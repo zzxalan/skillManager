@@ -1,18 +1,13 @@
 pluginManagement {
     repositories {
         mavenLocal()
-        def smartMavenUrl = System.getenv('SMART_MAVEN_URL')
-        if (smartMavenUrl) {
-            maven {
-                url = uri(smartMavenUrl)
-                allowInsecureProtocol = (System.getenv('SMART_MAVEN_ALLOW_INSECURE') ?: 'false').toBoolean()
-                credentials {
-                    username = System.getenv('SMART_MAVEN_USERNAME') ?: ''
-                    password = System.getenv('SMART_MAVEN_PASSWORD') ?: ''
-                }
-            }
+        maven {
+            url 'http://192.168.50.122:8081/repository/maven-releases/'
+            allowInsecureProtocol = true
         }
-        mavenCentral()
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
         gradlePluginPortal()
     }
 }
