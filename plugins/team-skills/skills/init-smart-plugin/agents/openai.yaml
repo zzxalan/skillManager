@@ -1,0 +1,7 @@
+interface:
+  display_name: "Init Smart Plugin"
+  short_description: "生成 smart-mixed 初始插件工程模板。"
+  default_prompt: "Use $init-smart-plugin to 创建一个 smart-mixed 初始插件项目，并在确认摘要后生成后端和前端模板。"
+
+policy:
+  allow_implicit_invocation: false

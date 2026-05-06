@@ -1,0 +1,73 @@
+import com.outbook.plugin.core.descriptor.DefaultDependencyPlugin
+
+plugins {
+    id 'java-library'
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.outbook.plugin.packager)
+}
+
+group = 'com.outbook.smart'
+version = '0.1.0'
+
+def smartMavenUrl = providers.environmentVariable('SMART_MAVEN_URL')
+def smartMavenUser = providers.environmentVariable('SMART_MAVEN_USERNAME')
+def smartMavenPassword = providers.environmentVariable('SMART_MAVEN_PASSWORD')
+
+repositories {
+    mavenLocal()
+    if (smartMavenUrl.isPresent()) {
+        maven {
+            url = uri(smartMavenUrl.get())
+            allowInsecureProtocol = (System.getenv('SMART_MAVEN_ALLOW_INSECURE') ?: 'false').toBoolean()
+            credentials {
+                username = smartMavenUser.orElse('').get()
+                password = smartMavenPassword.orElse('').get()
+            }
+        }
+    }
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly libs.outbook.smart.core
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    testImplementation libs.bundles.testing
+}
+
+outbookPackager {
+    id "__PLUGIN_ID__"
+    name "__DISPLAY_NAME__"
+    fileName "${outbookPackager.id}-${version}"
+    pluginInfo {
+        bootstrapClass 'com.outbook.smart.__JAVA_PACKAGE_FRAGMENT__.PluginApplication'
+        dependencyPlugins = [
+                [id: 'basic', version: '0.0.0'] as DefaultDependencyPlugin
+        ]
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def frontendDistDir = file('../frontend/dist')
+
+processResources {
+    from(frontendDistDir) {
+        into 'web'
+    }
+    doFirst {
+        if (!frontendDistDir.exists()) {
+            logger.lifecycle("前端资源目录不存在，跳过复制: ${frontendDistDir}")
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier.set('sources')
+}

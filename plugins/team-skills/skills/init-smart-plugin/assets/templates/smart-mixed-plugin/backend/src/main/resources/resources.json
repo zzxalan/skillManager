@@ -1,0 +1,30 @@
+{
+  "roles": [
+    {
+      "role_name": "管理员",
+      "role_code": "admin"
+    }
+  ],
+  "apps": [
+    {
+      "name": "__DISPLAY_NAME__",
+      "app_code": "__APP_CODE___manager",
+      "group_name": "空间管理",
+      "path": "/__APP_NAME__/",
+      "permission": "__APP_CODE___app",
+      "icon": ""
+    }
+  ],
+  "permissions": [
+    {
+      "permission_name": "__DISPLAY_NAME__应用",
+      "permission_code": "__APP_CODE___app",
+      "permission_type": "app",
+      "parent_id": 0,
+      "sort_order": 1,
+      "roles": [
+        "admin"
+      ]
+    }
+  ]
+}

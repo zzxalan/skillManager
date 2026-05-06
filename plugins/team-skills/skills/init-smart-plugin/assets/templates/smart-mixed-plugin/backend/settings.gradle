@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        def smartMavenUrl = System.getenv('SMART_MAVEN_URL')
+        if (smartMavenUrl) {
+            maven {
+                url = uri(smartMavenUrl)
+                allowInsecureProtocol = (System.getenv('SMART_MAVEN_ALLOW_INSECURE') ?: 'false').toBoolean()
+                credentials {
+                    username = System.getenv('SMART_MAVEN_USERNAME') ?: ''
+                    password = System.getenv('SMART_MAVEN_PASSWORD') ?: ''
+                }
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'smart-__PLUGIN_ID__-backend'

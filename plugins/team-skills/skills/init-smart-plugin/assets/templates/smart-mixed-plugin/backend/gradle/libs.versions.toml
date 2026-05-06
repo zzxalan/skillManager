@@ -1,0 +1,21 @@
+[versions]
+spring-boot = "3.3.4"
+spring-dependency-management = "1.1.6"
+outbook-core = "__BASE_VERSION__"
+outbook-plugin-packager = "2.1.8"
+lombok = "1.18.30"
+junit-platform = "1.10.0"
+
+[libraries]
+outbook-smart-core = { module = "com.outbook.smart:smart-core", version.ref = "outbook-core" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+outbook-plugin-packager = { id = "com.outbook.plugin-packager", version.ref = "outbook-plugin-packager" }
+
+[bundles]
+testing = ["spring-boot-starter-test", "junit-platform-launcher"]
