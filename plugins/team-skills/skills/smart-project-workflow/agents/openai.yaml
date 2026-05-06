@@ -1,0 +1,4 @@
+interface:
+  display_name: "Smart Project Workflow"
+  short_description: "用于 smart 空间管理项目插件从需求到交付的 AI 开发流程"
+  default_prompt: "Use $smart-project-workflow to 规划这个 smart-* 插件开发任务，从需求、边界、契约、计划到验证交付按流程推进。"
