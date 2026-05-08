@@ -1,47 +1,43 @@
 import { StrictMode } from "react";
 import { createRoot, Root } from "react-dom/client";
-import {
-  qiankunWindow,
-  renderWithQiankun,
-} from "vite-plugin-qiankun/dist/helper";
-import App from "./App";
 import "./index.css";
-
-type QiankunProps = {
-  container?: Element | Document;
-  targetPath?: string;
-};
+import App from "./App.tsx";
+import "./plugins/assets";
+import {
+  renderWithQiankun,
+  qiankunWindow,
+} from "vite-plugin-qiankun/dist/helper";
+import { AntdConfig } from "@va/ui";
 
 let app: Root | null = null;
+async function setupApp(props: any = {}) {
+  const { container } = props;
+  app = createRoot(
+    container
+      ? container.querySelector("#root")
+      : document.querySelector("#root"),
+  );
 
-function resolveRoot(container?: Element | Document): Element {
-  const root = container
-    ? container.querySelector("#root")
-    : document.querySelector("#root");
-  if (!root) {
-    throw new Error("缺少 #root 节点");
-  }
-  return root;
-}
-
-function setupApp(props: QiankunProps = {}) {
-  app = createRoot(resolveRoot(props.container));
   app.render(
     <StrictMode>
-      <App props={props} />
+      <AntdConfig>
+        <App props={props} />
+      </AntdConfig>
     </StrictMode>,
   );
 }
 
+// some code
 renderWithQiankun({
-  bootstrap() {
+  update(): void | Promise<void> {
     return undefined;
   },
   mount(props) {
-    setupApp(props as QiankunProps);
+    console.log("mount");
+    setupApp(props);
   },
-  update() {
-    return undefined;
+  bootstrap() {
+    console.log("bootstrap");
   },
   unmount() {
     if (app) {
@@ -52,5 +48,5 @@ renderWithQiankun({
 });
 
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
-  setupApp();
+  setupApp({});
 }
