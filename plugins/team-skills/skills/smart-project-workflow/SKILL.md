@@ -43,10 +43,10 @@ description: "用于 smart（空间管理）项目中 smart-core 基座与 smart
 
 ## Delivery Artifacts
 
-推荐每个需求保留以下产物：
+推荐每个需求在目标仓库保留以下稳定产物。目标仓库指当前需求实际归属的 `smart-*` 插件仓库；涉及基座改动时，目标仓库可以是 `smart-core`。
 
 ```text
-docs/ai/<date>-<feature>/
+<target-repo>/docs/
   spec.md
   design.md
   data-ownership.md
@@ -54,6 +54,10 @@ docs/ai/<date>-<feature>/
   verification.md
   pr-description.md
 ```
+
+如果某个阶段文档内容较多，采用渐进式披露：保留对应的 `<target-repo>/docs/<artifact>.md` 作为主索引，只放摘要、当前状态和子文档链接；详细内容拆分到同名目录 `<target-repo>/docs/<artifact>/` 中，例如需求拆到 `docs/spec/`，方案拆到 `docs/design/`。
+
+阶段文档必须写入后续 AI 和开发者能稳定发现的位置。默认使用目标仓库 `docs/` 下的固定文件名；如团队已有固定子目录，可以沿用该稳定目录。
 
 模板位于 `assets/templates/`：
 

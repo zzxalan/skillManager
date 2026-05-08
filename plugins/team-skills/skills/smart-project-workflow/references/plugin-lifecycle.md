@@ -18,17 +18,33 @@
 
 - 每个阶段都要有明确输出，不接受只停留在聊天记录里的结论。
 - 阶段产物可以轻量，但必须足以让其他人审查。
+- 阶段产物默认写入目标插件仓库的 `docs/` 下，并使用稳定文件名。
 - AI 可以辅助生成方案和代码，但关键边界判断必须由开发者确认。
 - 涉及基座能力、跨插件能力、数据归属、权限、安全、删除数据、迁移文件时，必须显式写入设计或验证文档。
 
 ## 推荐输出
 
-- 需求进入：`spec.md`
-- 边界分析：`data-ownership.md`
-- 契约设计：`design.md`
-- 任务拆分：`plan.md`
-- 联调验证：`verification.md`
-- Review 交付：`pr-description.md`
+轻量场景默认使用目标仓库 `docs/` 下的稳定文件：
+
+- 需求进入：`<target-repo>/docs/spec.md`
+- 边界分析：`<target-repo>/docs/data-ownership.md`
+- 契约设计：`<target-repo>/docs/design.md`
+- 任务拆分：`<target-repo>/docs/plan.md`
+- 联调验证：`<target-repo>/docs/verification.md`
+- Review 交付：`<target-repo>/docs/pr-description.md`
+
+当文档内容较多时，采用渐进式披露结构：
+
+- 需求进入：`<target-repo>/docs/spec.md` + `<target-repo>/docs/spec/`
+- 边界分析：`<target-repo>/docs/data-ownership.md` + `<target-repo>/docs/data-ownership/`
+- 契约设计：`<target-repo>/docs/design.md` + `<target-repo>/docs/design/`
+- 任务拆分：`<target-repo>/docs/plan.md` + `<target-repo>/docs/plan/`
+- 联调验证：`<target-repo>/docs/verification.md` + `<target-repo>/docs/verification/`
+- Review 交付：`<target-repo>/docs/pr-description.md` + `<target-repo>/docs/pr-description/`
+
+每个主文档只保留摘要、当前状态、文档目录和关键结论；详细规则、过程记录和验证证据放入对应的同名目录子文档。
+
+若目标仓库已经有团队约定的稳定文档子目录，可以沿用该目录。后续补充、修订或验证回写应继续更新同一组稳定文件。
 
 ## 阶段推进条件
 

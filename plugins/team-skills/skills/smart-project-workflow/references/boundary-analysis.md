@@ -34,7 +34,7 @@
 
 ## 输出要求
 
-输出 `data-ownership.md`，至少包含：
+输出目标仓库 `docs/data-ownership.md`，至少包含以下内容。若边界分析内容较多，则 `docs/data-ownership.md` 作为主索引，详情拆分到 `docs/data-ownership/` 下的子文档：
 
 - 当前插件职责。
 - 基座职责。
