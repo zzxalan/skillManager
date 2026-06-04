@@ -1,0 +1,7 @@
+interface:
+  display_name: "Smart Token Login"
+  short_description: "获取 smart 本地联调 token 并生成注入方式。"
+  default_prompt: "Use $smart-token-login to 获取 smart 本地联调 token，并帮我注入到前端登录环境。"
+
+policy:
+  allow_implicit_invocation: true

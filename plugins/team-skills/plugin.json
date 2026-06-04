@@ -1,1 +1,37 @@
-/home/zzx/code/skillManager/plugins/team-skills/.codex-plugin/plugin.json
+{
+  "name": "team-skills",
+  "version": "0.1.2",
+  "description": "团队维护的可复用 Agent Skills，用于沉淀共享 AI 工作流。",
+  "author": {
+    "name": "outbook",
+    "email": "无",
+    "url": "[待填写: 团队主页]"
+  },
+  "homepage": "https://github.com/zzxalan/skillManager",
+  "repository": "https://github.com/zzxalan/skillManager",
+  "license": "UNLICENSED",
+  "keywords": [
+    "团队技能",
+    "团队工作流",
+    "AI Agent",
+    "Codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "团队技能",
+    "shortDescription": "面向 AI Agent 的可复用团队工作流。",
+    "longDescription": "由团队维护的 Agent Skills 集合，用于沉淀可复用流程、领域知识、脚本和模板。",
+    "developerName": "团队",
+    "category": "生产力",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "梳理 smart 插件需求边界，生成实施计划。",
+      "按 smart 前后端规范实现变更并完成验证。",
+      "优化提示词或复盘团队 skill 使用问题。"
+    ],
+    "brandColor": "#10A37F"
+  }
+}
