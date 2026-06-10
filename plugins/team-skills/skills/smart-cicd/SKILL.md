@@ -97,6 +97,38 @@ python3 scripts/deploy-smart-package.py 201 \
   --execute
 ```
 
+## 下载 master 包脚本
+
+脚本路径：`scripts/download-smart-master-packages.py`
+
+下载 Nexus `smart-package` 仓库中所有 `master` 最新包；`master` 会同时匹配 Nexus 路径或文件名里的 `master` 和 `release`。脚本默认每个模块只下载最新包，所有包直接放在输出目录根目录，不生成 `manifest.json`，并把输出目录压缩为 `.zip`；压缩包内是一层同名目录，jar 位于该目录下。遇到同名包时会按 Nexus 路径自动改成唯一文件名：
+
+```bash
+cd <smart-cicd-skill-dir>
+python3 scripts/download-smart-master-packages.py
+```
+
+只预览将下载哪些包，不真正下载：
+
+```bash
+cd <smart-cicd-skill-dir>
+python3 scripts/download-smart-master-packages.py --dry-run
+```
+
+指定输出目录：
+
+```bash
+cd <smart-cicd-skill-dir>
+python3 scripts/download-smart-master-packages.py --output-dir ~/Downloads/smart-package-master
+```
+
+需要下载所有历史版本或额外生成清单时再显式加参数：
+
+```bash
+cd <smart-cicd-skill-dir>
+python3 scripts/download-smart-master-packages.py --all-versions --with-manifest
+```
+
 ## 工作流
 
 1. 如果用户说 `xxx打包`：

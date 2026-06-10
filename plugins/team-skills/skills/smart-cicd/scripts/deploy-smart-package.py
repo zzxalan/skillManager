@@ -165,17 +165,6 @@ def parse_version(token: str) -> tuple[tuple[int, ...], int, str]:
 
 
 def asset_sort_key(asset: Asset, branch: str) -> tuple[int, tuple[int, ...], int, str, str]:
-    parts = asset.path.strip("/").split("/")
-    channels = branch_channels(branch)
-    filename_has_version = bool(version_tokens(asset.filename))
-    direct_channel_file = (
-        len(parts) == 3
-        and parts[1].lower() in channels
-        and not filename_has_version
-    )
-    if direct_channel_file:
-        return 2, (999999,), 1, "", asset.path
-
     tokens = version_tokens(asset.path)
     if not tokens:
         return 0, (0,), 0, "", asset.path
