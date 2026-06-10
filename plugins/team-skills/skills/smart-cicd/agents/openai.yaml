@@ -1,0 +1,4 @@
+interface:
+  display_name: "Smart CI/CD"
+  short_description: "打包并部署 smart 基座和插件包到内网服务器"
+  default_prompt: "Use $smart-cicd to package activity for develop and update 201."
