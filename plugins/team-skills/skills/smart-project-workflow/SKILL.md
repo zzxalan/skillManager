@@ -23,21 +23,26 @@ description: "用于 smart（空间管理）项目中 smart-core 基座与 smart
 ## Core Workflow
 
 1. 先读取 `references/plugin-lifecycle.md`，确认当前任务处于哪个交付阶段。
-2. 需求不清时，读取 `references/requirement-intake.md`，先形成可评审需求。
-3. 涉及任何代码实现、数据库、接口、前端页面、基座能力或跨插件依赖时，先读取 `references/boundary-analysis.md`。
-4. 涉及前后端协作、跨插件能力、数据读写或外部集成时，读取 `references/contract-design.md`。
-5. 开发前读取 `references/implementation-plan.md`，把任务拆成 AI 可稳定执行的小步。
-6. 进入编码时，读取 `references/ai-coding-execution.md`，并按任务类型触发 `smart-backend-standards`、`smart-frontend-standards` 或两者。
-7. 交付前读取 `references/verification-handoff.md`，输出验证与 PR 交接材料。
-8. 发现可复用规范、重复问题或新的踩坑结论时，读取 `references/workflow-maintenance.md`，决定沉淀到本 skill、实现层 standards，还是按 `team-skill-iteration` 记录待评审。
+2. 对复杂需求、PRD 转工程任务、多 Agent 协作、跨前后端/DevOps/测试的任务，先读取 `references/scope-freeze-gate.md`，冻结交付介质、做/不做范围、数据归属、环境前置和阶段验收。
+3. 需求不清时，读取 `references/requirement-intake.md`，先形成可评审需求。
+4. 涉及任何代码实现、数据库、接口、前端页面、基座能力或跨插件依赖时，先读取 `references/boundary-analysis.md`。
+5. 涉及前后端协作、跨插件能力、数据读写或外部集成时，读取 `references/contract-design.md`。
+6. 开发前读取 `references/implementation-plan.md`，把任务拆成 AI 可稳定执行的小步。
+7. 进入编码时，读取 `references/ai-coding-execution.md`，并按任务类型触发 `smart-backend-standards`、`smart-frontend-standards` 或两者。
+8. 交付前读取 `references/verification-handoff.md`，输出验证与 PR 交接材料。
+9. 发现可复用规范、重复问题或新的踩坑结论时，读取 `references/workflow-maintenance.md`，决定沉淀到本 skill、实现层 standards，还是按 `team-skill-iteration` 记录待评审。
 
 ## Hard Gates
 
+- 复杂需求没有完成范围冻结，不拆完整研发流水线；只能启动需求澄清、代码调研或技术边界分析。
 - 没有需求澄清产物，不进入技术设计。
 - 没有插件边界分析，不进入代码实现。
 - 没有数据归属判断，不新增表、不改表、不写入疑似其他插件拥有的数据。
 - 没有接口或跨插件契约，不让前后端或插件间调用并行散写。
 - 没有实施计划，不做大范围一次性修改。
+- 没有真实环境前置确认，不启动依赖环境的执行任务，例如 Grafana、部署、远程联调、第三方集成或数据源配置。
+- 用户补充的新口径覆盖旧范围时，先做影响分析并暂停/取消/退回不再满足前置条件的 issue，再继续调度。
+- 实现类任务默认必须产出可审查 PR；没有 PR、远端分支或明确阻塞原因，不进入代码审查。
 - 没有验证记录，不输出完成结论。
 - 交付前必须按命中的实现层 standards 的 review checklist 做自检。
 
