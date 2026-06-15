@@ -151,7 +151,7 @@ def find_frontend_dir(project_dir: pathlib.Path, skip_frontend: bool) -> pathlib
     for candidate in candidates:
         if candidate.is_dir() and (candidate / "package.json").exists():
             return candidate
-    raise PackageError(f"找不到前端目录：{project_dir}/frontend，无法先执行 pnpm build。")
+    raise PackageError(f"找不到前端目录：{project_dir}/frontend，无法先执行 pnpm install 和 pnpm build。")
 
 
 def parse_args() -> argparse.Namespace:
@@ -176,6 +176,7 @@ def main() -> int:
             branch = infer_branch(project_dir, backend_dir)
 
         gradlew = backend_dir / "gradlew"
+        frontend_install_command = ["pnpm", "install"]
         frontend_command = ["pnpm", "build"]
         backend_command = [
             "./gradlew",
@@ -190,10 +191,11 @@ def main() -> int:
         print(f"[BACKEND] {backend_dir}")
         print(f"[BRANCH] {branch}")
         if frontend_dir:
+            print("[FRONTEND INSTALL COMMAND] " + " ".join(frontend_install_command))
             print("[FRONTEND COMMAND] " + " ".join(frontend_command))
         print("[BACKEND COMMAND] " + " ".join(backend_command))
         if args.dry_run:
-            print("[DRY-RUN] 未执行前端构建和 Gradle 打包。")
+            print("[DRY-RUN] 未执行前端安装、构建和 Gradle 打包。")
             return 0
         if frontend_dir and not shutil.which("pnpm"):
             raise PackageError("找不到 pnpm，请先安装或配置 pnpm。")
@@ -203,6 +205,10 @@ def main() -> int:
             raise PackageError(f"gradlew 没有执行权限：{gradlew}，请先执行 chmod +x。")
 
         if frontend_dir:
+            print("[INSTALL] 开始执行 pnpm install")
+            install_result = subprocess.run(frontend_install_command, cwd=str(frontend_dir), check=False)
+            if install_result.returncode != 0:
+                raise PackageError(f"前端 pnpm install 失败，退出码：{install_result.returncode}")
             print("[BUILD] 开始执行 pnpm build")
             frontend_result = subprocess.run(frontend_command, cwd=str(frontend_dir), check=False)
             if frontend_result.returncode != 0:

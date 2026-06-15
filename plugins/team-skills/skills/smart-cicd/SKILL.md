@@ -2,7 +2,6 @@
 name: smart-cicd
 description: 用于 smart 项目内网 CI/CD 打包、部署与发版操作；当用户说“xxx打包”“更新188”“更新201”“更新124”、执行 Gradle 发布、部署 develop/master 分支包、从 Nexus smart-package 仓库同步基座包和插件包、重启 smart-server、查看部署日志或排查部署失败时使用。
 ---
-
 # Smart CI/CD
 
 ## 目标
@@ -36,17 +35,19 @@ description: 用于 smart 项目内网 CI/CD 打包、部署与发版操作；�
 
 脚本路径：`scripts/package-smart-project.py`
 
-用户说 `xxx打包` 时，先把 `xxx` 当作项目目录名或路径，先进入它的 `frontend` 目录构建静态文件：
+用户说 `xxx打包` 时，先把 `xxx` 当作项目目录名或路径，先进入它的 `frontend` 目录执行：
 
 ```bash
+pnpm install
 pnpm build
 ```
 
-前端构建成功后，再进入它的 `backend` 目录执行：
+前端安装和构建成功后，再进入它的 `backend` 目录执行：
 
 ```bash
 ./gradlew clean 发布 --refresh-dependencies -Pbranch=${branch}
 ```
+
 
 `branch` 只能是 Gradle 发布参数使用的 `develop` 或 `release`：
 
@@ -133,7 +134,8 @@ python3 scripts/download-smart-master-packages.py --all-versions --with-manifest
 
 1. 如果用户说 `xxx打包`：
    - 将 `xxx` 作为项目目录名或路径，运行打包脚本。
-   - 打包脚本必须先在 `frontend` 目录执行 `pnpm build`，成功后再执行后端 Gradle 发布。
+   - 打包脚本必须先在 `frontend` 目录执行 `pnpm install`，再执行 `pnpm build`，成功后再执行后端 Gradle 发布。
+   - 如果前端安装或构建失败，保留关键错误，不继续后端发布。
    - 如果用户同时说了 `develop`、`release`、`master`、`main`，按打包分支规则传入 `--branch`。
    - 如果用户没说分支，允许脚本根据 Git 当前分支自动推断；推断失败时询问用户。
    - 前端构建或后端打包失败时保留关键错误，不要继续部署。
@@ -161,9 +163,16 @@ python3 scripts/download-smart-master-packages.py --all-versions --with-manifest
 - 如果只是用户问“有哪些包”“先看一下”“dry run”，不要加 `--execute`。
 - 如果只是用户问“打包命令是什么”“先看一下打包”，打包脚本加 `--dry-run`。
 - 不要跳过前端 `pnpm build`，除非用户明确说明只打后端或临时跳过前端。
+- 不要把 `pnpm build` 当作安装步骤；前端应先 `pnpm install` 再 `pnpm build`。
 - 部署插件包时默认必须先备份并清空 `/data/smart/app/plugins`，防止旧版本包留在目录里；只有用户明确要求保留旧插件时才加 `--no-clear-plugins`。
 - 如果部署失败，不要连续盲目重启；先读取 `systemctl status smart-server` 和 `/data/smart/app/logs` 最新日志。
 - 如果包分类看起来异常，例如所有包都被识别为插件包但用户期望包含基座包，先用 dry run 输出清单并调整 `--base-regex` 或 `--plugin-regex`。
+
+## 前端打包
+
+- 前端目录固定先执行 `pnpm install`，再执行 `pnpm build`。
+- 如果安装阶段本身失败，先修复依赖环境，再重跑同一条打包命令。
+- 交付结果时说明前端是否需要重新安装依赖。
 
 ## 常用排查
 
