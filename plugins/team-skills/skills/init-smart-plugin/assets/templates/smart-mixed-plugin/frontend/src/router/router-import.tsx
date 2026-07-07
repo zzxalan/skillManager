@@ -1,24 +1,31 @@
-import type { RouteObject } from "react-router-dom";
-import Home from "@/pages/home";
-import NotFound from "@/pages/_builtin/404";
+import BlankLayout from "@/layouts/BasicLayout";
+import type { RouteItem } from "@va/components";
+import type { ComponentType, ReactNode } from "react";
 
-export const APP_NAME = "__APP_NAME__";
-
-export const pages = {
-  Home,
+const convert = (module: { default: ComponentType }) => {
+  const { default: Component, ...rest } = module;
+  return { ...rest, Component };
 };
 
-export const staticPages = {
-  NotFound,
+export const layouts: Record<string, ReactNode> = {
+  BasicLayout: <BlankLayout />,
 };
 
-export const routes: RouteObject[] = [
-  {
-    index: true,
-    element: <Home />,
-  },
+export const staticPages: Record<string, () => Promise<{ Component: ComponentType }>> = {
+  NotFound: () => import("@/pages/_builtin/404").then(convert),
+};
+
+export const pages: Record<string, () => Promise<{ Component: ComponentType }>> = {
+  Home: () => import("@/pages/home").then(convert),
+};
+
+export const staticRoutes: RouteItem[] = [
   {
     path: "*",
-    element: <NotFound />,
+    name: "NotFound",
+    mark: "NotFound",
+    layout: false,
   },
 ];
+
+export const routes = { ...staticPages, ...pages };

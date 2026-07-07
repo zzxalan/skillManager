@@ -1,4 +1,5 @@
 {
   "app": "__APP_NAME__",
-  "appName": "__DISPLAY_NAME__"
+  "appName": "__DISPLAY_NAME__",
+  "msg_tag_color": "#F7B515"
 }

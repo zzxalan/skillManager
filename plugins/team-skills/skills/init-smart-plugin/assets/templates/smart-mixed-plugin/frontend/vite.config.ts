@@ -16,6 +16,12 @@ export default defineConfig(() => {
     build: {
       chunkSizeWarningLimit: 2000,
       emptyOutDir: true,
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, "index.html"),
+          h5: path.resolve(__dirname, "h5.html"),
+        },
+      },
     },
     resolve: {
       alias: {

@@ -7,7 +7,15 @@ description: 用于创建 smart-mixed 初始插件、初始化 smart-core 插件
 
 ## 目标
 
-生成一个去业务化的 `smart-mixed` 初始插件项目，包含最小后端插件入口、资源声明、前端 React 19 + TypeScript + Vite + qiankun 接入结构，以及前端产物复制到后端插件包 `web/` 的链路。
+生成一个从真实 `smart-mixed` 插件去业务化而来的初始插件项目，包含后端插件入口、资源声明、完整 Gradle 依赖、前端 React 19 + TypeScript + Vite + qiankun + H5 接入结构，以及前端产物复制到后端插件包 `web/` 的链路。
+
+## 模板维护原则
+
+- 模板资产以 `/Users/zhangzx/code/outbook/smart/smart-meeting-mixed` 为参考源维护。
+- 前后端依赖必须从参考项目完整复制；不要按当前示例代码“最小可用”自行裁剪依赖，避免生成后缺包。
+- 前端模板必须保留参考项目的工程框架层，包括 Vite、qiankun、`@va/core/router` 动态路由、AntdConfig、UnoCSS、H5 构建入口、请求封装、token 同步、类型声明和 pnpm lockfile。
+- 只删除或占位化业务相关内容，例如会议页面、会议接口、会议权限、会议数据库脚本和具体业务文案；不要删除工程框架、构建插件、公共服务封装或宿主接入代码。
+- 更新模板时优先同步参考项目文件，再做去业务化和占位符替换；同步后必须检查模板内不残留 `meeting`、`会议管理` 等业务标识。
 
 ## 工作流
 
@@ -54,4 +62,4 @@ python3 scripts/init-smart-plugin.py \
 
 ## 交付输出
 
-生成完成后说明项目目录、关键文件、建议验证命令，并明确仍需在真实 smart-core 基座中加载验证。
+生成完成后说明项目目录、关键文件、建议验证命令，并明确仍需在真实 smart-core 基座中加载验证。模板维护完成后至少验证一次脚本生成结果、前端 `pnpm build` 和后端 `./gradlew build` 的基础可执行性。

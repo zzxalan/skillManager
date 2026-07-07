@@ -13,6 +13,15 @@
       "path": "/__APP_NAME__/",
       "permission": "__APP_CODE___app",
       "icon": ""
+    },
+    {
+      "name": "__DISPLAY_NAME__",
+      "app_code": "__APP_CODE___h5",
+      "group_name": "空间管理",
+      "path": "/child/__APP_NAME__/h5/h5.html/#/home",
+      "permission": "__APP_CODE___app",
+      "icon": "",
+      "platform": "h5"
     }
   ],
   "permissions": [

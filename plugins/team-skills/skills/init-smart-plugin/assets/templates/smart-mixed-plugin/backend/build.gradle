@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.outbook.plugin.packager)
+
 }
 
 ext {
@@ -15,25 +16,31 @@ group = 'com.outbook.smart'
 version = '0.1.0'
 
 repositories {
-    mavenLocal()
-    maven {
-        url 'http://192.168.50.122:8081/repository/maven-releases/'
-        allowInsecureProtocol = true
-    }
-    maven {
-        url 'https://maven.aliyun.com/repository/public/'
-    }
-    mavenCentral()
+        mavenLocal()
+        maven {
+            url 'http://192.168.50.122:8081/repository/maven-releases/'
+            allowInsecureProtocol = true
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        mavenCentral()
 }
 
 dependencies {
+    // 核心依赖
     compileOnly libs.outbook.smart.core
-
+    // 开发工具
     compileOnly libs.lombok
     annotationProcessor libs.lombok
+    annotationProcessor 'com.mybatis-flex:mybatis-flex-processor:1.11.1'
 
+    // 测试依赖 - 使用依赖包
+    testImplementation libs.outbook.smart.core
     testImplementation libs.bundles.testing
 }
+
+def remoteUrlValue = findProperty('smartRemoteUrl') ?: System.getenv('SMART_REMOTE_URL') ?: "http://192.168.20.13:28080"
 
 outbookPackager {
     id "__PLUGIN_ID__"
@@ -41,33 +48,13 @@ outbookPackager {
     fileName "${outbookPackager.id}-${branch}-${version}"
     pluginInfo {
         bootstrapClass 'com.outbook.smart.__JAVA_PACKAGE_FRAGMENT__.PluginApplication'
+
+        // 依赖其他插件
         dependencyPlugins = [
-                [id: 'basic', version: '0.0.0'] as DefaultDependencyPlugin
+                [id: 'basic', version: '0.0.0'] as DefaultDependencyPlugin,
         ]
     }
-    remoteUrl "http://192.168.20.13:18080"
-}
-
-test {
-    useJUnitPlatform()
-}
-
-def frontendDistDir = file('../frontend/dist')
-
-processResources {
-    from(frontendDistDir) {
-        into 'web'
-    }
-    doFirst {
-        if (!frontendDistDir.exists()) {
-            logger.lifecycle("前端资源目录不存在，跳过复制: ${frontendDistDir}")
-        }
-    }
-}
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allJava
-    archiveClassifier.set('sources')
+    remoteUrl remoteUrlValue
 }
 
 task 发布 {
@@ -88,4 +75,26 @@ task 发布 {
         }
         println "已上传到: ${uploadUrl}"
     }
+}
+
+def frontendDistDir = file('../frontend/dist')
+
+processResources {
+    from(frontendDistDir) {
+        into 'web'
+    }
+    doFirst {
+        if (!frontendDistDir.exists()) {
+            logger.lifecycle("前端资源目录不存在，跳过复制: ${frontendDistDir}")
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier.set('sources')
 }
