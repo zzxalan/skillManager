@@ -1,0 +1,7 @@
+interface:
+  display_name: "Smart Docs"
+  short_description: "规范 smart 项目文档体系、AI 上下文与设计评审文档。"
+  default_prompt: "Use $smart-docs to 为这个 smart 项目梳理或评审项目文档，并按文档体系补齐必要内容。"
+
+policy:
+  allow_implicit_invocation: true
