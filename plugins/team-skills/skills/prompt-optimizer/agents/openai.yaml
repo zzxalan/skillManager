@@ -1,7 +1,7 @@
 interface:
   display_name: "Prompt Optimizer"
-  short_description: "补全并优化上下文感知提示词。"
-  default_prompt: "Use $prompt-optimizer to turn my rough prompt into a complete context-aware prompt."
+  short_description: "补全并优化上下文感知提示词，只输出提示词不执行任务。"
+  default_prompt: "Use $prompt-optimizer to optimize my rough prompt only; do not execute the task it describes."
 
 policy:
   allow_implicit_invocation: true
