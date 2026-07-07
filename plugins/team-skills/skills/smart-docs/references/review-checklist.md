@@ -2,9 +2,10 @@
 
 ## System Check
 
-- 是否只保留 `README.md`、`AGENTS.md`、`PROJECT_CONTEXT.md`、`PRODUCT_REQUIREMENTS.md`、`FEATURE_DESIGN/*.md`、`ADR/*.md` 这 6 类长期文档。
+- 是否只保留 `README.md`、`AGENTS.md`、`docs/PRODUCT_REQUIREMENTS.md`、`docs/FEATURE_DESIGN/*.md`、`docs/ADR/*.md` 这 5 类长期文档。
+- 是否避免把 AI 项目上下文拆成额外长期文档。
 - 是否避免新增 `接口文档.md`、`数据库表结构.md`、`路由清单.md`、`枚举清单.md`、`部署手册.md` 等会复制代码事实的长期文档。
-- 是否在 README 或相关文档中提供接口、数据库、路由、部署等事实源入口。
+- 是否在 `README.md` 或相关文档中提供接口、数据库、路由、部署等事实源入口。
 
 ## Content Boundary Check
 
@@ -15,7 +16,7 @@
 
 ## AI Readability Check
 
-- AI 是否能通过 `PROJECT_CONTEXT.md` 快速知道项目目标、核心模块、前后端关系和推荐阅读顺序。
+- AI 是否能通过 `README.md` 快速知道项目目标、系统边界、核心模块、前后端关系、推荐阅读路径和关键注意事项。
 - `AGENTS.md` 是否包含常用命令、代码风格、验证要求、禁止事项和项目特有协作规则。
 - 关键文件路径是否足够具体，能让 AI 继续阅读代码而不是依赖猜测。
 - 文档标题是否稳定、清晰，便于 AI 用 `rg` 定位。

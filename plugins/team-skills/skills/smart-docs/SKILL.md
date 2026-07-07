@@ -1,6 +1,6 @@
 ---
 name: smart-docs
-description: "用于 smart 空间管理项目文档规范、文档体系建设和文档评审。Use when Codex creates, reviews, updates, audits, or standardizes README.md, AGENTS.md, docs/PROJECT_CONTEXT.md, docs/PRODUCT_REQUIREMENTS.md, docs/FEATURE_DESIGN/*.md, docs/ADR/*.md, AI 项目上下文、需求意图、复杂功能设计、架构决策记录、前后端项目文档沉淀。"
+description: "用于 smart 空间管理项目文档规范、文档体系建设和文档评审。Use when Codex creates, reviews, updates, audits, or standardizes README.md, AGENTS.md, docs/PRODUCT_REQUIREMENTS.md, docs/FEATURE_DESIGN/*.md, docs/ADR/*.md, AI 项目上下文、需求意图、复杂功能设计、架构决策记录、前后端项目文档沉淀。"
 ---
 
 # Smart Docs
@@ -11,7 +11,7 @@ description: "用于 smart 空间管理项目文档规范、文档体系建设�
 
 ## Core Workflow
 
-1. 先识别任务类型：初始化文档体系、补齐缺失文档、更新单篇文档、评审已有文档，或为 AI 建立项目上下文。
+1. 先识别任务类型：初始化文档体系、补齐缺失文档、更新单篇文档、评审已有文档，或更新 `README.md` 中的 AI 项目上下文。
 2. 读取当前项目已有 `README.md`、`AGENTS.md`、`docs/`、主要配置文件和目录结构；只收集和文档目标相关的信息。
 3. 先读取 `references/document-system.md`，确认允许保留的文档类型、目录结构和内容边界。
 4. 创建或重写具体文档时，读取 `references/document-templates.md`，按对应模板裁剪，不保留无意义占位段落。
@@ -21,14 +21,14 @@ description: "用于 smart 空间管理项目文档规范、文档体系建设�
 ## Reference Routing
 
 - 文档体系、目录、保留范围、禁止复述内容：读取 `references/document-system.md`
-- `README.md`、`AGENTS.md`、项目上下文、需求、功能设计、ADR 的模板：读取 `references/document-templates.md`
+- `README.md`（含 AI 项目上下文）、`AGENTS.md`、需求、功能设计、ADR 的模板：读取 `references/document-templates.md`
 - 文档评审、补齐检查、AI 可读性检查、交付自检：读取 `references/review-checklist.md`
 
 ## Working Rules
 
 - 默认使用中文编写项目文档，除非仓库已有明确英文文档体系或用户要求英文。
 - 保持项目既有文档风格、标题层级、命名规则和代码风格约定。
-- 长期保留的文档只包含：项目入口、AI 协作规则、AI 项目上下文、需求与产品意图、复杂功能设计、架构决策记录。
+- 长期保留的文档只包含：项目入口与 AI 项目上下文、AI 协作规则、需求与产品意图、复杂功能设计、架构决策记录。
 - 不手工维护接口完整列表、数据库完整表结构、路由完整清单、枚举完整值、组件 props 清单、Controller 方法清单等代码可直接查询的信息。
 - 对接口、数据表、部署、路由、构建产物等代码或配置已有事实源的内容，只写“去哪里查”和关键入口路径。
 - 不从代码强行推断产品意图；无法确认的业务目标、验收标准、角色差异和设计原因，明确标记为 `待确认`。
@@ -37,11 +37,10 @@ description: "用于 smart 空间管理项目文档规范、文档体系建设�
 
 ## Document Set
 
-项目文档默认收敛为以下 6 类：
+项目文档默认收敛为以下 5 类：
 
-- `README.md`：项目入口
+- `README.md`：项目入口 + AI 项目上下文
 - `AGENTS.md`：给 AI 的协作规则
-- `docs/PROJECT_CONTEXT.md`：给 AI 快速理解项目
 - `docs/PRODUCT_REQUIREMENTS.md`：需求与产品意图
 - `docs/FEATURE_DESIGN/*.md`：单个复杂功能设计
 - `docs/ADR/*.md`：架构决策记录
