@@ -1,6 +1,6 @@
 interface:
   display_name: "Smart Docs"
-  short_description: "规范 smart 项目文档体系、AI 上下文与设计评审文档。"
+  short_description: "规范 smart 项目场景验证、功能清单、页面结构与业务依赖。"
   default_prompt: "Use $smart-docs to 为这个 smart 项目梳理或评审项目文档，并按文档体系补齐必要内容。"
 
 policy:

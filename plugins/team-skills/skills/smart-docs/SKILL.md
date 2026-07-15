@@ -1,6 +1,6 @@
 ---
 name: smart-docs
-description: "用于 smart 空间管理项目文档规范、文档体系建设和文档评审。Use when Codex creates, reviews, updates, audits, or standardizes README.md, AGENTS.md, docs/PRODUCT_REQUIREMENTS.md, docs/FEATURE_DESIGN/*.md, docs/ADR/*.md, AI 项目上下文、需求意图、复杂功能设计、架构决策记录、前后端项目文档沉淀。"
+description: "用于 smart 空间管理项目文档规范、文档体系建设和文档评审。Use when Codex creates, reviews, updates, audits, or standardizes README.md, AGENTS.md, docs/PRODUCT_REQUIREMENTS.md, docs/FEATURE_DESIGN/*.md, AI 项目上下文、场景验证点、产品功能清单、页面结构、业务依赖、需求意图、复杂功能设计、前后端项目文档沉淀。"
 ---
 
 # Smart Docs
@@ -21,29 +21,32 @@ description: "用于 smart 空间管理项目文档规范、文档体系建设�
 ## Reference Routing
 
 - 文档体系、目录、保留范围、禁止复述内容：读取 `references/document-system.md`
-- `README.md`（含 AI 项目上下文）、`AGENTS.md`、需求、功能设计、ADR 的模板：读取 `references/document-templates.md`
+- `README.md`（含 AI 项目上下文）、`AGENTS.md`、需求和功能设计的模板：读取 `references/document-templates.md`
 - 文档评审、补齐检查、AI 可读性检查、交付自检：读取 `references/review-checklist.md`
 
 ## Working Rules
 
 - 默认使用中文编写项目文档，除非仓库已有明确英文文档体系或用户要求英文。
 - 保持项目既有文档风格、标题层级、命名规则和代码风格约定。
-- 长期保留的文档只包含：项目入口与 AI 项目上下文、AI 协作规则、需求与产品意图、复杂功能设计、架构决策记录。
+- 同类对象使用稳定标题和结构化列表描述，不使用 Markdown 表格。
+- 长期保留的文档只包含：项目入口与 AI 项目上下文、AI 协作规则、需求与产品意图、复杂功能设计。
 - 不手工维护接口完整列表、数据库完整表结构、路由完整清单、枚举完整值、组件 props 清单、Controller 方法清单等代码可直接查询的信息。
 - 对接口、数据表、部署、路由、构建产物等代码或配置已有事实源的内容，只写“去哪里查”和关键入口路径。
 - 不从代码强行推断产品意图；无法确认的业务目标、验收标准、角色差异和设计原因，明确标记为 `待确认`。
+- 产品需求使用“场景验证点”描述典型业务使用方式，每个验证点必须包含场景、角色、操作和正常业务结果。
+- 产品需求使用“功能清单”描述当前全部功能；业务规则和验收标准写在对应具体功能下，不单独维护全局清单。
+- 有页面的功能需要在对应具体功能下说明页面结构，包括筛选区、操作区、列表、列表规则和按钮行为；没有独立页面时明确写“无”。
+- 产品需求需要记录业务依赖关系，明确相关插件、依赖的数据或能力、受影响功能以及依赖缺失时的表现。
 - 复杂功能设计只覆盖状态流转复杂、权限复杂、跨系统联动、异步任务、金额、审批、调度或容易误改的功能。
-- ADR 只记录影响长期维护的关键决策，不为普通实现细节补流水账。
 
 ## Document Set
 
-项目文档默认收敛为以下 5 类：
+项目文档默认收敛为以下 4 类：
 
 - `README.md`：项目入口 + AI 项目上下文
 - `AGENTS.md`：给 AI 的协作规则
 - `docs/PRODUCT_REQUIREMENTS.md`：需求与产品意图
 - `docs/FEATURE_DESIGN/*.md`：单个复杂功能设计
-- `docs/ADR/*.md`：架构决策记录
 
 ## Conflict Order
 
