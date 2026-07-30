@@ -1,7 +1,7 @@
 interface:
   display_name: "Smart Frontend Standards"
-  short_description: "用于 smart 项目前端页面、H5、微前端与前端审查规范。"
-  default_prompt: "Use $smart-frontend-standards to 处理这个 smart-* 插件前端任务，并按前端规范选择 references。"
+  short_description: "用于 smart 前端页面、主题色、H5、微前端与代码审查规范。"
+  default_prompt: "Use $smart-frontend-standards to 处理这个 smart-* 前端任务，并按页面、主题色、H5 或微前端场景选择 references。"
 
 policy:
   allow_implicit_invocation: true

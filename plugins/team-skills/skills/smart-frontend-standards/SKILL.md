@@ -1,6 +1,6 @@
 ---
 name: smart-frontend-standards
-description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端 开发规范。Use when Codex works on React TypeScript Vite qiankun Ant Design Pro Components UnoCSS CSS Modules theme.useToken VaTable VAObkTable useBreadcrumb H5 页面 插件前端构建 接口请求 或前端页面审查。"
+description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端开发规范。Use when Codex works on React TypeScript Vite qiankun Ant Design Pro Components UnoCSS CSS Modules theme.useToken 动态主题色 colorPrimary antd-mobile VaTable VAObkTable useBreadcrumb H5 页面 插件前端构建 接口请求 或前端页面审查。"
 ---
 
 # Smart Frontend Standards
@@ -24,6 +24,7 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 前端
 - 列表页、CRUD 页、表格、查询、表单弹窗、`VAObkTable`、底层 `VaTable`：读取 `references/frontend-table-list.md`
 - 面包屑、返回路径、页面导航：读取 `references/frontend-navigation.md`
 - 视觉结构、交互布局、超长文本、CSS Modules、antd token、页面错误提示策略：读取 `references/frontend-design-guidelines.md`
+- 动态主题色、`colorPrimary`、`theme.useToken()`、CSS 变量、antd-mobile 主题同步、PC/微应用/H5 主题接入：读取 `references/frontend-theme-color.md`
 - H5 移动端页面、独立入口、H5 Vite 配置：读取 `references/frontend-h5-development.md`
 - qiankun、Vite、微前端接入、前端 API 前缀与请求封装：读取 `references/frontend-microfrontend.md`
 - 任意代码修改、命名、格式、中文注释与可读性：读取 `references/coding-style.md`

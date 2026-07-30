@@ -1,6 +1,6 @@
 ---
 name: smart-backend-standards
-description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端 开发规范。Use when Codex works on Java Spring Controller Service Mapper MyBatis-Flex CommonResult TimeManager EventBus Quartz NodeService Extract ExtractFactory MessageOpenApi MessageTemplateExtract 插件打包 接口联调 或后端代码审查。"
+description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端 开发规范。Use when Codex works on Java Spring Controller Service Mapper MyBatis-Flex CommonResult TimeManager EventBus Quartz NodeService Extract ExtractFactory MessageOpenApi MessageTemplateExtract resources.json 权限与应用配置 config-definition.json 系统配置 插件打包 接口联调 或后端代码审查。"
 ---
 
 # Smart Backend Standards
@@ -15,8 +15,9 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端
 2. 所有后端任务先读取 `references/architecture-boundary.md`。
 3. 按任务读取对应后端专题 reference。
 4. 只要涉及代码修改，额外读取 `references/coding-style.md`。
-5. 涉及插件入口、资源接入、打包、远程更新或接口联调时，读取 `references/integration-build-packaging.md`。
-6. 完成实现或 review 前，读取 `references/review-checklist.md` 做自检。
+5. 涉及 `resources.json` 权限与应用声明，或 `config/config-definition.json` 系统配置声明时，读取 `references/backend-plugin-resource-configuration.md`。
+6. 涉及插件入口、资源接入、打包、远程更新或接口联调时，读取 `references/integration-build-packaging.md`。
+7. 完成实现或 review 前，读取 `references/review-checklist.md` 做自检。
 
 ## Reference Routing
 
@@ -26,6 +27,7 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端
 - 宿主消息能力、`MessageOpenApi`、消息模板、消息跳转、消息投递审计：读取 `references/backend-message-feature.md`
 - 包结构、Controller / Service / DTO 落点、测试与验证范围：读取 `references/backend-module-structure.md`
 - 节点树、`NodeService`、`@Extract`、通用节点接口：读取 `references/backend-node-service.md`
+- `resources.json`、角色、应用入口、权限树、API 鉴权路径、`config-definition.json`、系统配置分组与表单定义：读取 `references/backend-plugin-resource-configuration.md`
 - 定时任务、Quartz、Job、Trigger、调度清理：读取 `references/backend-scheduler.md`
 - 任意代码修改、命名、格式、中文注释与可读性：读取 `references/coding-style.md`
 - 插件入口、资源接入、构建打包、远程更新、接口联调鉴权：读取 `references/integration-build-packaging.md`

@@ -4,6 +4,8 @@
 
 在插件中开发 H5 移动端页面（非 qiankun 微前端接入的独立移动端入口）时，读取本文件。
 
+H5 使用系统主题色、antd-mobile 或自定义主题 CSS 时，同时读取 `frontend-theme-color.md`。
+
 ## 强制规则
 
 - H5 入口 HTML 文件统一命名为 `h5.html`，放在 `frontend/` 根目录。
@@ -12,6 +14,8 @@
 - H5 构建配置独立为 `vite.config.h5.ts`，与主应用 `vite.config.ts` 分离。
 - H5 构建产物输出到 `dist/<plugin-name>/h5/` 子目录，确保与主应用产物隔离。
 - H5 页面不使用 qiankun 微前端接入，而是作为独立移动端入口直接部署。
+- H5 入口继续使用 `AntdConfig` 接入系统主题；若入口不能保证宿主已初始化 `setting` 缓存，渲染前先调用 `syncSettings()`。
+- 使用 antd-mobile 时，在 `AntdConfig` 内挂载统一主题 Bridge，将 `token.colorPrimary` 同步到 `--adm-color-primary`；自定义主题样式按 `frontend-theme-color.md` 映射模块专属 CSS 变量。
 - H5 页面存在初始化详情请求、列表请求或路由参数驱动请求时，`useEffect` 依赖数组只保留真正影响请求参数的值，例如 `roomId`、筛选条件、分页；不要把 `useEffectEvent` 返回的请求函数直接放进依赖数组。
 
 ## 推荐模式
@@ -57,6 +61,8 @@ import {StrictMode} from "react";
 import {createRoot, Root} from "react-dom/client";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import SomePage from "@/h5_pages/domain/some-page";
+import {H5AntdMobileThemeBridge} from "@/h5_pages/mobile-theme-bridge";
+import {syncSettings} from "@va/core/store";
 import {AntdConfig} from "@va/ui";
 import "./plugins/assets";
 
@@ -65,6 +71,7 @@ const isDev = import.meta.env.DEV;
 const h5Basename = isDev ? "/<plugin-name>/h5" : "/child/<plugin-name>/h5";
 
 async function setupApp(props: any = {}) {
+    await syncSettings();
     const {container} = props;
     app = createRoot(
         container
@@ -74,6 +81,7 @@ async function setupApp(props: any = {}) {
     app.render(
         <StrictMode>
             <AntdConfig>
+                <H5AntdMobileThemeBridge/>
                 <BrowserRouter basename={h5Basename}>
                     <Routes>
                         <Route path="/" element={<div>首页</div>}/>
@@ -209,6 +217,7 @@ const h5Basename = isDev ? "/attendance/h5" : "/child/attendance/h5";
 - 不要给 H5 配置添加 qiankun 插件（H5 是独立入口，不走微前端）。
 - 不要把 H5 和主应用构建配置混在一起，必须独立为 `vite.config.h5.ts`。
 - 不要修改 H5 输出目录后不检查后端的资源复制逻辑。
+- 不要在 H5 中写死系统默认主题色，或只修改 antd-mobile 固定 CSS 而不接入 Ant Design token。
 - 不要把 `useEffectEvent` 封装出来的请求函数放进 H5 页面初始化 `useEffect` 的依赖数组，导致详情页、列表页在 `setState` 后反复发请求。
 
 ## 开发或评审检查点
@@ -220,6 +229,8 @@ const h5Basename = isDev ? "/attendance/h5" : "/child/attendance/h5";
 - [ ] H5 路由 basename 是否区分开发和生产环境
 - [ ] H5 是否未引入 qiankun 插件
 - [ ] H5 页面是否适配移动端 viewport
+- [ ] 独立 H5 是否在必要时先同步系统设置，并由 `AntdConfig` 提供主题 token
+- [ ] 使用 antd-mobile 时是否同步了 `--adm-color-primary`，自定义 CSS 是否使用模块专属主题变量
 - [ ] H5 页面的初始化请求是否只由路由参数、筛选条件、分页等必要依赖驱动
 - [ ] 若使用了 `useEffectEvent` 封装请求函数，是否避免把返回函数加入 `useEffect` 依赖数组
 
