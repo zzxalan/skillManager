@@ -1,0 +1,7 @@
+interface:
+  display_name: "Smart Testcase to Playwright"
+  short_description: "从飞书或 Excel 用例生成并验证 smart Playwright 测试"
+  default_prompt: "Use $smart-testcase-to-playwright to 读取飞书链接或 Excel 测试用例，在对应 smart 插件中生成并执行 Playwright 测试。"
+
+policy:
+  allow_implicit_invocation: false
