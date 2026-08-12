@@ -1,0 +1,4 @@
+interface:
+  display_name: "Smart 客户定制"
+  short_description: "隔离 smart 客户定制，保护入口契约并完成打包、验证与回滚"
+  default_prompt: "Use $smart-customer-customization to design and deliver a customer-specific smart mixed plugin safely."
