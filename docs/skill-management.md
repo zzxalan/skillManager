@@ -154,14 +154,18 @@ description: Helps write release notes.
 
 ```text
 .
-├── .agents/plugins/marketplace.json
+├── marketplace.json                    # ZCode marketplace（仓库根目录）
+├── .agents/plugins/marketplace.json    # Codex repo-local marketplace
 ├── docs/skill-management.md
 ├── plugins/team-skills/
-│   ├── .codex-plugin/plugin.json
+│   ├── .codex-plugin/plugin.json       # Codex plugin manifest
+│   ├── .zcode-plugin/plugin.json       # ZCode plugin manifest
 │   └── skills/
 ├── scripts/validate-skills.py
 └── templates/skill/
 ```
+
+skill 本体（`SKILL.md` + `references/` + `scripts/` + `assets/`）是跨客户端通用的；各客户端的差异只在插件清单和 marketplace 登记文件。新增 skill 不需要改任何清单文件，发布插件版本时统一更新三处 `version`（根 `marketplace.json`、`.zcode-plugin/plugin.json`、`.codex-plugin/plugin.json`）。
 
 新增团队 skill：
 

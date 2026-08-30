@@ -101,38 +101,55 @@ def validate_skill(skill_dir: Path, reporter: Reporter) -> None:
 
 
 def validate_plugin(plugin_root: Path, reporter: Reporter) -> list[Path]:
-    manifest = plugin_root / ".codex-plugin" / "plugin.json"
-    if not manifest.exists():
-        reporter.error(f"{manifest}: 缺少 plugin manifest")
+    manifests = [
+        plugin_root / ".codex-plugin" / "plugin.json",
+        plugin_root / ".zcode-plugin" / "plugin.json",
+    ]
+    present = [path for path in manifests if path.exists()]
+    if not present:
+        reporter.error(
+            f"{plugin_root}: 缺少 plugin manifest（需要 .codex-plugin/plugin.json 或 .zcode-plugin/plugin.json）"
+        )
         return []
 
-    try:
-        data = json.loads(manifest.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        reporter.error(f"{manifest}: JSON 格式错误: {exc}")
-        return []
+    skills_roots: list[Path] = []
+    seen_roots: set[Path] = set()
+    for manifest in present:
+        try:
+            data = json.loads(manifest.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            reporter.error(f"{manifest}: JSON 格式错误: {exc}")
+            continue
 
-    name = data.get("name", "")
-    if not name:
-        reporter.error(f"{manifest}: 缺少 name")
-    elif not NAME_RE.match(name):
-        reporter.error(f"{manifest}: name 必须使用 kebab-case")
-    elif name != plugin_root.name:
-        reporter.error(f"{manifest}: name `{name}` 必须和插件目录名 `{plugin_root.name}` 一致")
+        name = data.get("name", "")
+        if not name:
+            reporter.error(f"{manifest}: 缺少 name")
+        elif not NAME_RE.match(name):
+            reporter.error(f"{manifest}: name 必须使用 kebab-case")
+        elif name != plugin_root.name:
+            reporter.error(f"{manifest}: name `{name}` 必须和插件目录名 `{plugin_root.name}` 一致")
 
-    skills_path = data.get("skills")
-    if not skills_path:
-        return []
-    if not isinstance(skills_path, str) or not skills_path.startswith("./"):
-        reporter.error(f"{manifest}: skills 路径必须是以 ./ 开头的相对路径")
-        return []
+        skills_path = data.get("skills")
+        if not skills_path:
+            continue
+        if not isinstance(skills_path, str):
+            reporter.error(f"{manifest}: skills 必须是相对路径字符串")
+            continue
 
-    skills_root = (plugin_root / skills_path).resolve()
-    if not skills_root.exists():
-        reporter.error(f"{manifest}: skills 路径不存在: {skills_path}")
-        return []
+        skills_root = (plugin_root / skills_path).resolve()
+        if not skills_root.exists():
+            reporter.error(f"{manifest}: skills 路径不存在: {skills_path}")
+            continue
+        try:
+            skills_root.relative_to(plugin_root.resolve())
+        except ValueError:
+            reporter.error(f"{manifest}: skills 路径不能超出插件目录: {skills_path}")
+            continue
+        if skills_root not in seen_roots:
+            seen_roots.add(skills_root)
+            skills_roots.append(skills_root)
 
-    return [skills_root]
+    return skills_roots
 
 
 def validate_marketplace(repo_root: Path, reporter: Reporter) -> None:
@@ -174,6 +191,71 @@ def validate_marketplace(repo_root: Path, reporter: Reporter) -> None:
             reporter.error(f"{marketplace}: plugins[{index}] 缺少 category")
 
 
+def validate_zcode_marketplace(repo_root: Path, reporter: Reporter) -> None:
+    marketplace = repo_root / "marketplace.json"
+    if not marketplace.exists():
+        reporter.warning(f"{marketplace}: 缺少 ZCode marketplace（ZCode 只探测 .claude-plugin/ 和仓库根目录）")
+        return
+
+    try:
+        data = json.loads(marketplace.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        reporter.error(f"{marketplace}: JSON 格式错误: {exc}")
+        return
+
+    name = data.get("name")
+    if not name:
+        reporter.error(f"{marketplace}: 缺少 name")
+    elif not re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,127}", name):
+        reporter.error(f"{marketplace}: name `{name}` 必须匹配 ^[a-z0-9][a-z0-9._-]{{0,127}}$")
+
+    plugins = data.get("plugins")
+    if not isinstance(plugins, list) or not plugins:
+        reporter.error(f"{marketplace}: plugins 必须是非空数组")
+        return
+
+    for index, plugin in enumerate(plugins):
+        plugin_name = plugin.get("name")
+        if not plugin_name:
+            reporter.error(f"{marketplace}: plugins[{index}] 缺少 name")
+            continue
+
+        source = plugin.get("source")
+        if isinstance(source, str):
+            source_path = source
+        elif isinstance(source, dict) and source.get("source") == "directory":
+            source_path = source.get("path")
+        else:
+            reporter.error(f"{marketplace}: plugins[{index}].source 必须是相对路径或 directory source")
+            continue
+        if not isinstance(source_path, str) or not source_path.startswith("./"):
+            reporter.error(f"{marketplace}: plugins[{index}].source 必须是以 ./ 开头的相对路径")
+            continue
+
+        plugin_root = (repo_root / source_path).resolve()
+        if not plugin_root.exists():
+            reporter.error(f"{marketplace}: plugins[{index}] 路径不存在: {source_path}")
+            continue
+        if plugin_root.name != plugin_name:
+            reporter.error(
+                f"{marketplace}: plugins[{index}] name `{plugin_name}` 必须和目录名 `{plugin_root.name}` 一致"
+            )
+
+        entry_version = plugin.get("version")
+        zcode_manifest = plugin_root / ".zcode-plugin" / "plugin.json"
+        if zcode_manifest.exists():
+            try:
+                manifest_data = json.loads(zcode_manifest.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                continue
+            manifest_version = manifest_data.get("version")
+            if entry_version and manifest_version and entry_version != manifest_version:
+                reporter.error(
+                    f"{marketplace}: plugins[{index}] version `{entry_version}` 和 "
+                    f"{zcode_manifest} 的 `{manifest_version}` 不一致"
+                )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate Agent Skills in this repository.")
     parser.add_argument(
@@ -192,6 +274,7 @@ def main() -> int:
             skills_roots.extend(validate_plugin(plugin_root, reporter))
 
     validate_marketplace(repo_root, reporter)
+    validate_zcode_marketplace(repo_root, reporter)
 
     for skills_root in skills_roots:
         for skill_dir in skill_dirs(skills_root):
