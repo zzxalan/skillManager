@@ -1,4 +1,4 @@
 interface:
   display_name: "Smart Info"
-  short_description: "smart 项目基座、插件、仓库映射信息"
-  default_prompt: "Use $smart-info to 查询 smart 项目的基座、插件、中文名、英文仓库名和本地目录映射。"
+  short_description: "smart 插件术语、正式名称、仓库与归属映射信息"
+  default_prompt: "Use $smart-info to 识别 smart 项目的插件标识、正式名称、别名、工程仓库和需求归属。"
