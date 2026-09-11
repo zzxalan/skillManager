@@ -1,0 +1,4 @@
+interface:
+  display_name: "Smart Platform"
+  short_description: "统一调用 MCP 处理 smart 项目识别、构建、部署和诊断"
+  default_prompt: "Use $smart-platform with the smart-cicd MCP for smart project operations."

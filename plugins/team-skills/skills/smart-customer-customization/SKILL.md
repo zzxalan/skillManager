@@ -13,7 +13,7 @@ description: "用于 smart 空间管理项目的客户/学校定制隔离与交�
 
 ## Core Workflow
 
-1. 先使用 `smart-info` 确认基座、客户插件、业务插件、终端和本地仓库映射；以实际仓库代码覆盖过期项目地图。
+1. 先使用 `smart-platform` 通过 MCP 确认基座、客户插件、业务插件、终端和本地仓库映射；以实际仓库代码覆盖过期项目地图。
 2. 读取目标仓库 `AGENTS.md`，检查 `git status`、近期提交和已有 `docs/`，建立不覆盖用户改动的事实基线。
 3. 使用 `smart-project-workflow` 完成需求、边界、契约、计划、验证和 PR 交付产物。若目标插件尚不存在，使用 `init-smart-plugin` 初始化 mixed 插件，禁止手工拼装另一套模板。
 4. 把每项需求归入以下一种类型：

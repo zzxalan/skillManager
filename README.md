@@ -17,6 +17,10 @@
 python3 scripts/validate-skills.py
 ```
 
+## MCP 自动安装
+
+`team-skills` 插件内置 smart-cicd MCP 配置。安装插件后客户端会自动加载 `.mcp.json`；默认连接 `http://127.0.0.1:3000/api/mcp`，部署环境请设置 `SMART_CICD_MCP_URL`。账号密码只通过 `SMART_CICD_MCP_USERNAME`、`SMART_CICD_MCP_PASSWORD` 注入请求头，MCP 地址仅限内网，不得暴露公网。Smart 项目相关操作统一使用 `smart-platform`。
+
 ## 个人使用
 
 把某个 skill 同步或软链到本机的 skills 目录：

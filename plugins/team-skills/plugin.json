@@ -1,6 +1,6 @@
 {
   "name": "team-skills",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "团队维护的可复用 Agent Skills，用于沉淀共享 AI 工作流。",
   "author": {
     "name": "outbook",
@@ -17,6 +17,7 @@
     "Codex"
   ],
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "团队技能",
     "shortDescription": "面向 AI Agent 的可复用团队工作流。",

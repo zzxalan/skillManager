@@ -1,6 +1,6 @@
 ---
 name: smart-testcase-to-playwright
-description: "仅当用户明确调用 $smart-testcase-to-playwright 时使用，禁止隐式触发。用于将 smart 系统的飞书测试用例链接或 Excel 测试用例文件解析为可执行的 Playwright TypeScript 自动化测试：检查环境、账号、权限和测试数据，使用 smart-info 定位对应插件项目，使用 smart-token-login 准备登录态，在测试环境探索并验证真实操作路径，将测试工程写入插件根目录 test/，实际执行测试并输出 HTML、JSON、JUnit 报告及失败证据。"
+description: "仅当用户明确调用 $smart-testcase-to-playwright 时使用，禁止隐式触发。用于将 smart 系统的飞书测试用例链接或 Excel 测试用例文件解析为可执行的 Playwright TypeScript 自动化测试：检查环境、账号、权限和测试数据，使用 smart-platform MCP 定位对应插件项目，使用 smart-token-login 准备登录态，在测试环境探索并验证真实操作路径，将测试工程写入插件根目录 test/，实际执行测试并输出 HTML、JSON、JUnit 报告及失败证据。"
 ---
 
 # Smart Testcase To Playwright
@@ -43,7 +43,7 @@ description: "仅当用户明确调用 $smart-testcase-to-playwright 时使用�
 
 ### 3. 定位代码归属
 
-1. 使用 `$smart-info` 的项目地图，根据用例模块、plugin id、菜单或业务名称确定主要业务插件。
+1. 使用 `$smart-platform` 通过 MCP，根据用例模块、plugin id、菜单或业务名称确定主要业务插件。
 2. 再检查本地实际仓库结构；项目地图与代码冲突时，以代码为准并说明差异。
 3. 使用以下放置规则：
    - 单插件用例：写入该插件根目录的 `test/`。

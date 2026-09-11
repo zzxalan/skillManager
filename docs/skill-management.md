@@ -31,7 +31,7 @@ my-skill/
 ## Skill 与 Plugin 的边界
 
 - Skill：让 agent 按你的流程做事。适合规范、步骤、领域知识、模板、固定检查清单。
-- Plugin：把 skill、MCP、app connector、hooks、assets 等打包成可安装能力。适合团队共享或跨仓库分发。
+- Plugin：把 skill、MCP、app connector、hooks、assets 等打包成可安装能力。适合团队共享或跨仓库分发。需要随插件自动安装 MCP 时，在插件根目录提供 `.mcp.json`，并在各客户端 manifest 声明 `mcpServers`。
 
 简单判断：
 

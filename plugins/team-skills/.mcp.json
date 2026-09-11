@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "smart-cicd": {
+      "type": "streamable-http",
+      "url": "${SMART_CICD_MCP_URL:-http://127.0.0.1:3000/api/mcp}",
+      "headers": {
+        "X-CICD-Username": "${SMART_CICD_MCP_USERNAME}",
+        "X-CICD-Password": "${SMART_CICD_MCP_PASSWORD}"
+      }
+    }
+  }
+}
