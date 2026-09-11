@@ -1,6 +1,6 @@
 ---
 name: smart-backend-standards
-description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端 开发规范。Use when Codex works on Java Spring Controller Service Mapper MyBatis-Flex CommonResult TimeManager EventBus Quartz NodeService Extract ExtractFactory MessageOpenApi MessageTemplateExtract resources.json 权限与应用配置 config-definition.json 系统配置 插件打包 接口联调 或后端代码审查。"
+description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端 开发规范。Use when Codex works on Java Spring Controller Service Mapper MyBatis-Flex Flyway 迁移文件 db/migration V*__*.sql CommonResult TimeManager EventBus Quartz NodeService Extract ExtractFactory MessageOpenApi MessageTemplateExtract resources.json 权限与应用配置 config-definition.json 系统配置 插件打包 接口联调 或后端代码审查。"
 ---
 
 # Smart Backend Standards
@@ -22,7 +22,7 @@ description: "用于 smart 空间管理项目 smart-core + smart-* 插件 后端
 ## Reference Routing
 
 - 后端接口、Controller、HTTP 方法、分页返回、响应包装：读取 `references/backend-api-response.md`
-- 数据访问、实体、Mapper、Service、查询、分页、状态回写：读取 `references/backend-data-access.md`
+- 数据访问、实体、Mapper、Service、查询、分页、状态回写、Flyway 迁移文件：读取 `references/backend-data-access.md`
 - Extract 扩展点、`@Extract`、bus/scene、`ExtractFactory`、扩展接口设计：读取 `references/backend-extract-extension.md`
 - 宿主消息能力、`MessageOpenApi`、消息模板、消息跳转、消息投递审计：读取 `references/backend-message-feature.md`
 - 包结构、Controller / Service / DTO 落点、测试与验证范围：读取 `references/backend-module-structure.md`
