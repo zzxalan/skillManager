@@ -17,7 +17,6 @@
     "Codex"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "团队技能",
     "shortDescription": "面向 AI Agent 的可复用团队工作流。",

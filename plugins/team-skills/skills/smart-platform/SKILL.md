@@ -6,7 +6,14 @@ description: 通过已安装的 smart-cicd MCP 统一处理 smart 项目识别�
 
 ## 入口
 
-优先调用 `smart-cicd` MCP，不从固定清单或硬编码服务器推断事实。插件、仓库、环境、制品和实际版本以 MCP 返回为准。
+优先调用已安装的 `smart-cicd` MCP，不从固定清单或硬编码服务器推断事实。插件、仓库、环境、制品和实际版本以 MCP 返回为准。
+
+如果识别到 `smart-cicd` MCP 未安装，先告知用户安装后再继续，并提供以下配置：
+
+- 地址固定为 `http://192.168.20.213:3300/api/mcp`
+- 在请求 headers 中填写 `X-CICD-Username`（账号）和 `X-CICD-Password`（密码）
+
+账号密码只放在 MCP 客户端的 headers 配置中，不写入 skill、代码、命令或回复内容。未完成安装和连通性验证前，不执行后续 smart 项目操作。
 
 - 项目识别：`catalog_list`、`resolve_plugin`、`resolve_environment`
 - 环境查看：`inspect_environment`、`diagnose_environment`、`collect_environment`

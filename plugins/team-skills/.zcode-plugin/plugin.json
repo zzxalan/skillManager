@@ -1,6 +1,6 @@
 {
   "name": "team-skills",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "团队维护的可复用 Agent Skills，用于沉淀共享 AI 工作流。",
   "author": {
     "name": "outbook"
@@ -13,26 +13,5 @@
     "AI Agent",
     "ZCode"
   ],
-  "skills": "skills",
-  "mcpServers": ".zcode-plugin/mcp.json",
-  "userConfig": {
-    "mcpUrl": {
-      "title": "smart-cicd MCP 地址",
-      "description": "smart-cicd MCP 的 HTTP 地址，仅限内网",
-      "type": "string",
-      "default": "http://192.168.20.213:3300/api/mcp"
-    },
-    "username": {
-      "title": "smart-cicd 用户名",
-      "description": "请求头 X-CICD-Username 的值",
-      "type": "string",
-      "sensitive": true
-    },
-    "password": {
-      "title": "smart-cicd 密码",
-      "description": "请求头 X-CICD-Password 的值",
-      "type": "string",
-      "sensitive": true
-    }
-  }
+  "skills": "skills"
 }

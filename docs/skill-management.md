@@ -31,7 +31,7 @@ my-skill/
 ## Skill 与 Plugin 的边界
 
 - Skill：让 agent 按你的流程做事。适合规范、步骤、领域知识、模板、固定检查清单。
-- Plugin：把 skill、MCP、app connector、hooks、assets 等打包成可安装能力。适合团队共享或跨仓库分发。需要随插件自动安装 MCP 时，在插件根目录提供 `.mcp.json`，并在各客户端 manifest 声明 `mcpServers`。客户端语法有差异时单独声明：Codex 的 `.mcp.json` 支持 `${VAR:-默认值}`；ZCode 只支持 `${user_config.KEY}` 且 `type` 仅限 `stdio`/`http`/`sse`，用 `.zcode-plugin/mcp.json` 配合 `userConfig` 声明。
+- Plugin：把 skill、MCP、app connector、hooks、assets 等打包成可安装能力。适合团队共享或跨仓库分发。插件不自动安装 MCP。使用 smart 相关 skill 前，需由用户在客户端手动添加 smart-cicd MCP，地址固定为 `http://192.168.20.213:3300/api/mcp`，并在请求 headers 中填写 `X-CICD-Username` 与 `X-CICD-Password`。
 
 简单判断：
 

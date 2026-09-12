@@ -17,14 +17,15 @@
 python3 scripts/validate-skills.py
 ```
 
-## MCP 自动安装
+## smart-cicd MCP 配置
 
-`team-skills` 插件内置 smart-cicd MCP 配置，两个客户端的声明语法不同，分文件维护：
+`team-skills` 不会自动安装 smart-cicd MCP。识别到 MCP 未安装时，请先在所用客户端手动添加，再执行 smart 项目相关操作：
 
-- **Codex**（插件根目录 `.mcp.json`）：默认连接 `http://192.168.20.213:3300/api/mcp`，部署环境通过环境变量 `SMART_CICD_MCP_URL` 覆盖（支持 `${VAR:-默认值}` 语法）；账号密码通过环境变量 `SMART_CICD_MCP_USERNAME`、`SMART_CICD_MCP_PASSWORD` 注入请求头。
-- **ZCode**（`.zcode-plugin/mcp.json`，由 `.zcode-plugin/plugin.json` 的 `mcpServers` 指向）：模板变量只支持 `${user_config.KEY}`，不支持 `${VAR:-默认值}`，且 `type` 只能是 `stdio`/`http`/`sse`。MCP 地址默认值与账号密码声明在 `.zcode-plugin/plugin.json` 的 `userConfig`，安装插件后在 插件管理 → 对应插件的高级设置 里填写；GUI 启动的 ZCode 读不到 shell 环境变量，不要用 `${ENV_VAR}` 传密钥。
+- MCP 地址固定为 `http://192.168.20.213:3300/api/mcp`。
+- 在请求 headers 中填写 `X-CICD-Username`（账号）和 `X-CICD-Password`（密码）。
+- 账号密码仅保存在客户端的 headers 配置中，不要写入仓库、命令或聊天内容。
 
-MCP 地址仅限内网，不得暴露公网。Smart 项目相关操作统一使用 `smart-platform`。
+安装后先验证 MCP 可连通；未完成安装和验证前，不执行 smart 项目操作。
 
 ## 个人使用
 
