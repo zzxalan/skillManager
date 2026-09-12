@@ -11,7 +11,7 @@
       "source": "./plugins/team-skills",
       "displayName": "团队技能",
       "description": "团队维护的可复用 Agent Skills，用于沉淀共享 AI 工作流。",
-      "version": "0.1.11",
+      "version": "0.1.12",
       "author": {
         "name": "outbook"
       },
