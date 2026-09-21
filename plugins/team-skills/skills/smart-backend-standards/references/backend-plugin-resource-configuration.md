@@ -35,6 +35,7 @@
 - `api_path` 使用 `HTTP方法:宿主挂载后路径` 格式，多个路径用英文逗号分隔，例如 `GET:/api/classPanel/config,POST:/api/classPanel/config`。
 - 当前宿主权限路径缓存只显式处理 `GET` 和 `POST`；新增 `PUT`、`DELETE`、`PATCH` 之前先核对基座实现，不要只在 JSON 中声明就认为已生效。
 - 路径通配符跟随宿主 Sa-Token 路径匹配语义；对路径参数使用项目已有的 `/*` 模式，不自创 Spring MVC 占位符写法。
+- `api_path` 只能绑定本插件自己 Controller 暴露的接口。宿主公共接口（如 `/node/init`、`/node/search`、`/node/children` 通用节点接口）、基础应用公共接口和其他插件对外提供的公共接口一律不得绑定：绑定后宿主权限路径缓存会把该路径挂到本插件权限上，其他插件的前端页面和用户没有该权限就会被拒。
 - `resource_path` 用于声明对应前端资源或路由，`sort_order` 用于权限树排序；只有页面确实消费 `resource_path` 时才填写，排序值应与相邻模块保持稳定间隔。
 - `data_type` 表示需加载的数据权限类型，多个值使用英文逗号分隔；只在对应按钮权限真正需要数据范围时声明。
 - `icon` 可使用插件类路径下的相对路径，例如 `static/icon/班牌设置.png`；宿主会尝试统计并转换为文件 ID。修改图标后同时检查源文件和最终插件包。
@@ -160,6 +161,7 @@
 - 只增加前端菜单或按钮，不在 `resources.json` 声明对应权限和 API 路径。
 - 只声明按钮权限，却缺少 app -> menu -> button 父子链路或应用 `permission` 关联。
 - 把 Controller 内相对路径直接填入 `api_path`，遗漏宿主实际挂载的 `/api/{pluginId}` 前缀。
+- 把宿主公共接口、基础应用公共接口或其他插件对外提供的公共接口绑定进本插件 `api_path`，让公共路径被本插件权限接管，导致其他插件调用方无权限。
 - 把 `config-definition.json` 放在资源根目录，或随意改名为其他路径。
 - 把 `extJson` 写成 JSON 对象，或写入无法被 `JSON.parse` 解析的字符串。
 - 通过改默认值企图强制覆盖已有环境配置。
@@ -171,6 +173,7 @@
 - 角色、应用、app/menu/button 权限链和 API 路径是否完整一致。
 - 权限编码、应用编码和配置键是否具有稳定业务语义并避免冲突。
 - `api_path` 的 HTTP 方法、宿主前缀、通配符和多路径分隔是否与真实 Controller 一致。
+- `api_path` 每条路径是否都归属本插件，没有绑定宿主公共接口（如 `/node/*` 通用节点接口）、基础应用或其他插件对外提供的公共接口。
 - 配置项的 `valueType`、`formType`、`defaultValue`、`options`、`min/max`、`accept`、`extJson` 是否相互匹配。
 - 修改默认值、删除配置定义或重命名 `configKey` 时，是否评估现有配置值、事件监听和兼容迁移。
 - 构建产物是否包含两个声明文件，宿主启动日志和界面是否证明注册成功。
